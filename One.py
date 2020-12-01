@@ -21,9 +21,10 @@
 # Using the above example again, the three entries that sum to 2020 are 979, 366, and 675. Multiplying them together produces the answer, 241861950.
 # In your expense report, what is the product of the three entries that sum to 2020?
 
+from FileHelper import readFile
 import sys
 
-FILENAME: str = "./input.txt"
+FILENAME: str = "Input/inputOne.txt"
 MORE_OUTPUT: bool = False
 
 def populateDictWithNumbers(filename: str) -> dict:
@@ -34,12 +35,11 @@ def populateDictWithNumbers(filename: str) -> dict:
    numsDict: dict = {}
 
    try:
-      with open(filename, "r") as fp:
-         numsList: list = fp.readlines()
-
-         for num in numsList:
-            key = int(num)
-            numsDict.setdefault(key, 1)
+      numsList: list = readFile(FILENAME)
+      
+      for num in numsList:
+         key = int(num)
+         numsDict.setdefault(key, 1)
       
       return numsDict
    except:
