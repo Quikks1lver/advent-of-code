@@ -25,7 +25,7 @@
 from FileHelper import readFile
 import sys
 
-FILENAME: str = "Input/inputOne.txt"
+FILEPATH: str = "Input/inputOne.txt"
 MORE_OUTPUT: bool = False
 
 def populateDictWithNumbers(filename: str) -> dict:
@@ -36,7 +36,7 @@ def populateDictWithNumbers(filename: str) -> dict:
    numsDict: dict = {}
 
    try:
-      numsList: list = readFile(FILENAME)
+      numsList: list = readFile(filename)
       
       for num in numsList:
          key = int(num)
@@ -86,7 +86,7 @@ def findThreeOperands(numsDict: dict, targetNum: int) -> (int, int, int):
    return sys.maxsize, sys.maxsize, sys.maxsize
 
 """ Call the functions! """
-numsDict: dict = populateDictWithNumbers(FILENAME)
+numsDict: dict = populateDictWithNumbers(FILEPATH)
 # Find part one answers
 print(f"Part one operands: {findSumOperands(numsDict, 2020)}")
 # Find part two answers

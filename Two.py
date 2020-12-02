@@ -22,7 +22,6 @@
 # 2-9 c: ccccccccc is invalid: both position 2 and position 9 contain c.
 # How many passwords are valid according to the new interpretation of the policies?
 
-import re
 from FileHelper import readFile
 
 FILEPATH: str = "Input/inputTwo.txt"
