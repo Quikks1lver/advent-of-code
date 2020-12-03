@@ -10,9 +10,9 @@ def buildMountain(filename: str) -> List[str]:
    """
    return [line.strip() for line in readFile(filename)]
 
-def findTreesOnMountainDescent(mountain: List[str], dx: int, dy: int) -> int:
+def countTreesOnMountainDescent(mountain: List[str], dx: int, dy: int) -> int:
    """
-   Finds the trees hit while descending the mountain, based on dx/dy "slope"
+   Counts the number of trees hit while descending the mountain, based on dx/dy "slope"
    """
    rowIndex, colIndex = 0, 0
    rowEnd = len(mountain)
@@ -35,13 +35,13 @@ def main():
    mountain: List[str] = buildMountain(FILEPATH)
 
    # part 1
-   findTreesOnMountainDescent(mountain, 1, 3)
+   countTreesOnMountainDescent(mountain, 1, 3)
 
    # part 2
    slopes: List[List[int]] = [[1, 1], [1, 3], [1, 5], [1, 7], [2, 1]]
    productOfTrees: int = 1
    for slope in slopes:
-      productOfTrees *= findTreesOnMountainDescent(mountain, slope[0], slope[1])
+      productOfTrees *= countTreesOnMountainDescent(mountain, slope[0], slope[1])
 
    print(f"\nProduct of trees: {productOfTrees}")
 
