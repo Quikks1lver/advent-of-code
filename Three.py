@@ -8,13 +8,7 @@ def buildMountain(filename: str) -> List[str]:
    """
    Constructs the mountain based on file input
    """
-   fileInput: List[str] = readFile(filename)
-   mountain: List[str] = []
-   
-   for line in fileInput:
-      mountain.append(line.strip())
-   
-   return mountain
+   return [line.strip() for line in readFile(filename)]
 
 def findTreesOnMountainDescent(mountain: List[str], dx: int, dy: int) -> int:
    """
