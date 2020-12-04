@@ -30,7 +30,6 @@ def countTreesOnMountainDescent(mountain: List[str], dx: int, dy: int) -> int:
    print(f"You will run into {treeCount} trees.")
    return treeCount
    
-   
 def main():
    mountain: List[str] = buildMountain(FILEPATH)
 
