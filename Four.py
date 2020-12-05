@@ -175,7 +175,6 @@ def countValidPassportsWithTighterSecurity(passportDictList: List[dict], require
    print(f"Under tighter security, valid passport count: {validPassports}")
    return validPassports
 
-
 def main():
    passportList: List[str] = createPassportList(FILEPATH)
    requirements: Tuple[str] = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid")
