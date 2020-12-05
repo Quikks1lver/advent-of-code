@@ -1,8 +1,7 @@
 # 12/2/20
 
 from Helpers.FileHelper import readFile
-
-FILEPATH: str = "Input/inputTwo.txt"
+FILEPATH: str = "Input/day2.txt"
 
 def componentizePassword(password: str) -> (int, int, str, str):
    """

@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/inputFive.txt"
+FILEPATH: str = "Input/day5.txt"
 
 def createTicketList(filename:str) -> List[str]:
    """

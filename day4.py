@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List, Tuple, Dict
-FILEPATH: str = "Input/inputFour.txt"
+FILEPATH: str = "Input/day4.txt"
 
 def createPassportList(filepath: str) -> List[str]:
    """
