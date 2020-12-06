@@ -13,7 +13,7 @@ def readFile(filename: str) -> List[str]:
    except:
       raise Exception(f"Failed to open {filename}")
 
-def readFileWithLineBreaks(filepath: str) -> List[str]:
+def readFileWithEmptyLineBreaks(filepath: str) -> List[str]:
    """
    Reads an input file, data separated by fully blank lines, and outputs a list of the data
    """

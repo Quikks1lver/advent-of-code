@@ -1,6 +1,6 @@
 # 12/6/20
 
-from Helpers.FileHelper import readFileWithLineBreaks
+from Helpers.FileHelper import readFileWithEmptyLineBreaks
 from typing import Dict, List, Set, Tuple, Union
 FILEPATH: str = "Input/day6.txt"
 
@@ -25,7 +25,7 @@ def calculateFormSumForList(formList: List[str]) -> int:
    for form in formList:
       count += calculateFormSum(form)
    
-   print(f"Total custom form sum: {count}")
+   print(f"Part 1 -- Total custom form sum: {count}")
    return count
 
 def calculateCommonFormSum(form: str) -> int:
@@ -58,11 +58,11 @@ def calculateCommonFormSumForList(formList: List[str]) -> int:
    for form in formList:
       sum += calculateCommonFormSum(form)
    
-   print(f"Total common for sum: {sum}")
+   print(f"Part 2 -- Total common form sum, only counting shared answers: {sum}")
    return sum
 
 def main():
-   customForms: List[str] = readFileWithLineBreaks(FILEPATH)
+   customForms: List[str] = readFileWithEmptyLineBreaks(FILEPATH)
    
    # Part 1
    calculateFormSumForList(customForms)
