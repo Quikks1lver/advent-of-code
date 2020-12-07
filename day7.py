@@ -68,11 +68,11 @@ def countNumBagsWithin(key: str, bagMap: Dict[str, List[str]]) -> int:
 
 def main():
    # Capture input
-   input: List[str] = readFile(FILEPATH)
+   bagInput: List[str] = readFile(FILEPATH)
    bagMap: Dict[str, List[str]] = {}
 
    # Populate hash map of bags
-   for s in input:
+   for s in bagInput:
       bagMap.update(createBagMap(s, False))
 
    # Part 1
@@ -84,7 +84,7 @@ def main():
    # Part 2
    bagMap = bagMap.clear()
    bagMap = {}
-   for s in input:
+   for s in bagInput:
       bagMap.update(createBagMap(s, True))
    numBagsWithin: int = countNumBagsWithin("shiny gold bag", bagMap)
    print(f"Part 2 -- number of bags within Shiny Gold Bag: {numBagsWithin}")
