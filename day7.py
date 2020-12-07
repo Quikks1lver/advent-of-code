@@ -34,9 +34,9 @@ def createBagMap(s: str, keepNumbering: bool) -> Dict[str, List[str]]:
    output[key] = value
    return output
 
-def recursiveGoldCounter(key: str, bagMap: Dict[str, List[str]]) -> int:
+def containsShinyGoldBag(key: str, bagMap: Dict[str, List[str]]) -> int:
    """
-   Recursively sees if the key (a bag) has any gold inside it. Part 1
+   Recursively sees if the key (a bag) has any gold inside it. Returns 1 if so, 0 otherwise. Part 1
    """
    flag: int = 0
 
@@ -47,7 +47,7 @@ def recursiveGoldCounter(key: str, bagMap: Dict[str, List[str]]) -> int:
       return 1
 
    for val in bagMap[key]:
-      flag += recursiveGoldCounter(val, bagMap)
+      flag += containsShinyGoldBag(val, bagMap)
       if flag >= 1:
          break
 
@@ -55,7 +55,7 @@ def recursiveGoldCounter(key: str, bagMap: Dict[str, List[str]]) -> int:
 
 def countNumBagsWithin(key: str, bagMap: Dict[str, List[str]]) -> int:
    """
-   Counts number of bags within the key (a bag). Part 2
+   Recursively counts number of bags within the key (a bag). Part 2
    """
    count: int = 0
 
@@ -78,7 +78,7 @@ def main():
    # Part 1
    count = 0
    for key in bagMap.keys():
-      count += recursiveGoldCounter(key, bagMap)
+      count += containsShinyGoldBag(key, bagMap)
    print(f"Part 1 -- Shiny Gold Bag count: {count - 1}")
 
    # Part 2
