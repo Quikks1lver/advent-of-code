@@ -5,13 +5,18 @@ from typing import List, Set
 from enum import Enum
 FILEPATH: str = "Input/day8.txt"
 
+# String constants
+ACC: str = "acc"
+JMP: str = "jmp"
+NOP: str = "nop"
+
 class Type(Enum):
    """
    Defines an action type (enum)
    """
-   ACC = "acc"
-   JMP = "jmp"
-   NOP = "nop"
+   ACC = 0
+   JMP = 1
+   NOP = 2
 
 class Action:
    """
@@ -19,11 +24,11 @@ class Action:
    """
    def __init__(self, type: Type, payload: int):
       self.type: Type = type
-      self.payload = payload      
+      self.payload: int = payload      
 
 def tokenizeAction(s: str) -> Action:
    """
-   Tokenizes input string into an Action type
+   Tokenizes input string into an Action
    """
    s = s.strip()
    
@@ -47,15 +52,15 @@ def tokenizeAction(s: str) -> Action:
 
 def parseInstructions(instructions: List[str]) -> (int, bool):
    """
-   Parses a list of game instructions, and returns global
-   accumulator right before an infinite loop arises. Also returns
-   1 if reached end of the file, 0 otherwise.
+   Parses a list of game instructions, and returns global accumulator right
+   before an infinite loop arises, or when the program terminates.
+   Also returns True if reached end of the file, False otherwise.
    """
    visitedInstructions: Set[int] = set()
    globalAcc: int = 0
    curAction: Action = None
    curLine: int = 0
-   instructionsLen = len(instructions)
+   instructionsLen: int = len(instructions)
    REACHED_END: bool = False
 
    while curLine < instructionsLen:
@@ -88,9 +93,6 @@ def fixGame(instructions: List[str]) -> int:
 
    endgameAcc: int = 0
    endFlag: bool = False
-
-   JMP: str = "jmp"
-   NOP: str = "nop"
 
    while curLine < instructionsLen:
       curAction = tokenizeAction(newInstructions[curLine])
