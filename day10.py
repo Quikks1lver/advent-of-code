@@ -9,7 +9,7 @@ def calculateVoltageDifference(adapters: List[int]) -> int:
    Given a list of adapters, calculate product of 1-volt and 3-volt diffs
    """
    oneDiff: int = 0
-   threeDiff: int = 0
+   threeDiff: int = 1 # your phone adapter's diff
    prev: int = 0
 
    for i in range(len(adapters)):
@@ -22,8 +22,7 @@ def calculateVoltageDifference(adapters: List[int]) -> int:
          continue
       prev = adapters[i]
    
-   product: int = oneDiff * (threeDiff + 1) # don't forget your own adapter
-   return product
+   return oneDiff * threeDiff
 
 def countValidArrangements(adapters: List[int]) -> int:
    """
