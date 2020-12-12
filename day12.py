@@ -110,7 +110,7 @@ class Waypoint(Ferry):
             else:
                self.horiz, self.vert = -1 * self.vert, self.horiz
          elif rotation == 2:
-            self.horiz, self.vert = -1 * self.vert, -1 * self.horiz
+            self.horiz, self.vert = -1 * self.horiz, -1 * self.vert
          else:
             if iType == "R":
                self.horiz, self.vert = -1 * self.vert, self.horiz
@@ -156,7 +156,7 @@ def main():
          print(f" {i} | {boat.horiz} {boat.vert} {boat.curDirection.value} ")
          print(f" {i} | {wayPoint.horiz} {wayPoint.vert} ", end="\n\n")
       
-   print(f"Part 2 -- Manhattan Distance: {boat.calculateManhattanDistance()}")
+   print(f"Part 2horiz -- Manhattan Distance: {boat.calculateManhattanDistance()}")
 
 if __name__ == "__main__":
    main()
