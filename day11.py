@@ -8,7 +8,6 @@ FILEPATH: str = "Input/day11.txt"
 EMPTY: str = "L"
 FLOOR: str = "."
 OCCUPIED: str = "#"
-DEBUGGING: bool = False
 
 class SeatChange:
    """
@@ -53,15 +52,13 @@ def determineSeatChanges(seats: List[str], row: int, col: int, rowBound: int, co
             numOccupiedSeats += 1
          if occupied and numOccupiedSeats >= changeTolerance:
             change: SeatChange = SeatChange(row, col, EMPTY)
-            if DEBUGGING:
-               print(f"currently: {seats[row][col]} |  {change.row}, {change.col}, {change.newState}")
             return change
    
    if numOccupiedSeats == 0 and not occupied:
       change: SeatChange = SeatChange(row, col, OCCUPIED)
-      if DEBUGGING:
-         print(f"currently: {seats[row][col]} |  {change.row}, {change.col}, {change.newState}")
       return change
+   else:
+      return None
 
 # A wacky function name, I know. Tis for fun =)
 def determineSeatChangesAsFarAsTheEyeCanSee(seats: List[str], row: int, col: int, rowBound: int, colBound: int, changeTolerance: int) -> (Union[None, SeatChange]):
@@ -78,35 +75,30 @@ def determineSeatChangesAsFarAsTheEyeCanSee(seats: List[str], row: int, col: int
    states: Tuple[Tuple[int]] = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
 
    for state in states:
-      foundChange: bool = False
       tempRow, tempCol = state[0] + row, state[1] + col
       firstFlag = True
 
       while not isOutOfBounds(tempRow, tempCol, rowBound, colBound):
          if not firstFlag:
-            tempRow, tempCol = state[0] + tempRow, state[1] + tempCol
-            if isOutOfBounds(tempRow, tempCol, rowBound, colBound):
-               break
-            
-         print(state, end=" | ")
-         print(f" {tempRow}  {tempCol} ")
-         if seats[tempRow][tempCol] == OCCUPIED:
-            numOccupiedSeats += 1
-            foundChange = True
-            break
+            tempRow, tempCol = tempRow + state[0], tempCol + state[1]
          firstFlag = False
 
-      if occupied and numOccupiedSeats >= changeTolerance:
-            change: SeatChange = SeatChange(row, col, EMPTY)
-            if DEBUGGING:
-               print(f"currently: {seats[row][col]} |  {change.row}, {change.col}, {change.newState}")
-            return change
-   
-   if numOccupiedSeats == 0 and not occupied:
-      change: SeatChange = SeatChange(row, col, OCCUPIED)
-      if DEBUGGING:
-         print(f"currently: {seats[row][col]} |  {change.row}, {change.col}, {change.newState}")
+         if isOutOfBounds(tempRow, tempCol, rowBound, colBound):
+            break
+         if seats[tempRow][tempCol] == EMPTY:
+            break
+         if seats[tempRow][tempCol] == OCCUPIED:
+            numOccupiedSeats += 1
+            break
+      
+   if occupied and numOccupiedSeats >= changeTolerance:
+      change: SeatChange = SeatChange(row, col, EMPTY)
       return change
+   elif numOccupiedSeats == 0 and not occupied:
+      change: SeatChange = SeatChange(row, col, OCCUPIED)
+      return change
+   else:
+      return None
 
 def countOccupiedSeats(seats: List[str], rowBound, colBound) -> int:
    """
@@ -119,25 +111,30 @@ def countOccupiedSeats(seats: List[str], rowBound, colBound) -> int:
             numSeats += 1
    return numSeats
 
-def main():
-   seats: List[str] = [line.strip() for line in readFile(FILEPATH)]
+def runUntilNoChange(seats: List[str], threshold: int, asFarAsTheEyeCanSee: bool) -> int:
+   """
+   Runs seat changing algorithm until equilibrium
+   """
+   flag: bool = True
+   tempChange: Union[SeatChange, None] = None
    rowBound: int = len(seats)
    colBound: int = len(seats[0])
-   changes: List[SeatChange] = []
-   tempChange: Union[SeatChange, None] = None
-   flag: bool = True
-   numRounds: int = 0
-   
+
+   seats = seats.copy()
+
    while flag:
       flag = False
-      numRounds += 1
       newSeats = []
       for i in range(0, rowBound):
          newSeatLine = ""
          for j in range(0, colBound):
             tempChange = None
-            tempChange = determineSeatChanges(seats, i, j, rowBound, colBound, 4)
-            # tempChange = determineSeatChangesAsFarAsTheEyeCanSee(seats, i, j, rowBound, colBound, 5)
+            
+            if asFarAsTheEyeCanSee:
+               tempChange = determineSeatChangesAsFarAsTheEyeCanSee(seats, i, j, rowBound, colBound, threshold)
+            else:
+               tempChange = determineSeatChanges(seats, i, j, rowBound, colBound, threshold)
+            
             if tempChange != None:
                newSeatLine += tempChange.newState
                flag = True
@@ -147,12 +144,17 @@ def main():
 
       seats.clear()
       seats = newSeats
+   
+   return countOccupiedSeats(seats, rowBound, colBound)
 
-   if DEBUGGING:
-      print(f"Numrounds til no change: {numRounds}")
-
-   numSeats: int = countOccupiedSeats(seats, rowBound, colBound)
-   print(f"Part 1 -- Numseats: {numSeats}")
+def main():
+   seats: List[str] = [line.strip() for line in readFile(FILEPATH)]
+   
+   # Part 1
+   print(f"Part 1 -- Numseats: {runUntilNoChange(seats, 4, False)}")
+   
+   # Part 2
+   print(f"Part 2 -- Numseats: {runUntilNoChange(seats, 5, True)}")
 
 if __name__ == "__main__":
    main()

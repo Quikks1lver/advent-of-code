@@ -5,8 +5,6 @@ from typing import List
 from enum import Enum
 FILEPATH: str = "Input/day12.txt"
 
-DEBUGGING: bool = False
-
 class Direction(Enum):
    """
    Cardinal direction
