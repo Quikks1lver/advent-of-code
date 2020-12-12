@@ -5,18 +5,13 @@ from typing import List, Set
 from enum import Enum
 FILEPATH: str = "Input/day8.txt"
 
-# String constants
-ACC: str = "acc"
-JMP: str = "jmp"
-NOP: str = "nop"
-
 class Type(Enum):
    """
    Defines an action type (enum)
    """
-   ACC = 0
-   JMP = 1
-   NOP = 2
+   ACC = "acc"
+   JMP = "jmp"
+   NOP = "nop"
 
 class Action:
    """
@@ -37,12 +32,12 @@ def tokenizeAction(s: str) -> Action:
 
    optParam: int = 0
    actionType: str = s[0:3]
-   actionParam: int = s[4:]
+   actionParam: str = s[4:]
 
-   if actionType == "acc":
+   if actionType == Type.ACC.value:
       tokenType = Type.ACC
       tokenParam = int(actionParam)
-   elif actionType == "jmp":
+   elif actionType == Type.JMP.value:
       tokenType = Type.JMP
       tokenParam = int(actionParam)
    else:
@@ -100,18 +95,18 @@ def fixGame(instructions: List[str]) -> int:
       if curAction.type == Type.ACC:
          curLine += 1
       elif curAction.type == Type.JMP:
-         newInstructions[curLine] = newInstructions[curLine].replace(JMP, NOP)
+         newInstructions[curLine] = newInstructions[curLine].replace(Type.JMP.value, Type.NOP.value)
          endgameAcc, endFlag = parseInstructions(newInstructions)
          if endFlag:
             return endgameAcc
-         newInstructions[curLine] = newInstructions[curLine].replace(NOP, JMP)
+         newInstructions[curLine] = newInstructions[curLine].replace(Type.NOP.value, Type.JMP.value)
          curLine += curAction.payload
       else: # nop
-         newInstructions[curLine] = newInstructions[curLine].replace(NOP, JMP)
+         newInstructions[curLine] = newInstructions[curLine].replace(Type.NOP.value, Type.JMP.value)
          endgameAcc, endFlag = parseInstructions(newInstructions)
          if endFlag:
             return endgameAcc
-         newInstructions[curLine] = newInstructions[curLine].replace(JMP, NOP)
+         newInstructions[curLine] = newInstructions[curLine].replace(Type.JMP.value, Type.NOP.value)
          curLine += 1
 
 def main():
