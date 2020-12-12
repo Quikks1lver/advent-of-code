@@ -18,12 +18,6 @@ class SeatChange:
       self.col = col
       self.newState = newState
 
-def mutateElement(dArray: List[str], row: int, col: int, newStr: str) -> None:
-   """
-   Changes the given index's contents to newStr
-   """
-   dArray[row][col] = newStr
-
 def isOutOfBounds(row: int, col: int, rowBound: int, colBound: int) -> bool:
    """
    Checks if a row and col are out of bounds for a double array
@@ -125,8 +119,10 @@ def runUntilNoChange(seats: List[str], threshold: int, asFarAsTheEyeCanSee: bool
    while flag:
       flag = False
       newSeats = []
+      
       for i in range(0, rowBound):
          newSeatLine = ""
+         
          for j in range(0, colBound):
             tempChange = None
             
@@ -134,12 +130,13 @@ def runUntilNoChange(seats: List[str], threshold: int, asFarAsTheEyeCanSee: bool
                tempChange = determineSeatChangesAsFarAsTheEyeCanSee(seats, i, j, rowBound, colBound, threshold)
             else:
                tempChange = determineSeatChanges(seats, i, j, rowBound, colBound, threshold)
-            
-            if tempChange != None:
+
+            if tempChange == None:
+               newSeatLine += seats[i][j]
+            else:
                newSeatLine += tempChange.newState
                flag = True
-            else:
-               newSeatLine += seats[i][j]
+         
          newSeats.append(newSeatLine)
 
       seats.clear()
