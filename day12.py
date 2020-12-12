@@ -76,6 +76,59 @@ class Ferry:
       Calculates and returns manhattan distance of the ferry
       """
       return abs(self.horiz) + abs(self.vert)
+   
+   def moveRelativeToWaypoint(self, unitPayload: int, wayPointHoriz: int, wayPointVert: int) -> None:
+      """
+      Moves ferry relative to the waypoint
+      """
+      horizPayload: int = unitPayload * wayPointHoriz
+      vertPayload: int = unitPayload * wayPointVert
+      self.horiz += horizPayload
+      self.vert += vertPayload
+
+class Waypoint(Ferry):
+   """
+   Represents a waypoint, based off of a Ferry
+   """
+
+   def __init__(self, curDirection: Direction, horiz: int, vert: int):
+      super(Waypoint, self).__init__(curDirection, horiz, vert)
+   
+   def consumeWaypointInstruction(self, instruction: str) -> None:
+      """
+      Takes an instruction and mutates waypoint state
+      """
+      iType: str = instruction[0]
+
+      if iType == "R" or iType == "L":
+         # rotational
+         rotation: int = int(instruction[1:])
+         rotation = int(rotation / 90)
+         if rotation == 1:
+            if iType == "R":
+               self.horiz, self.vert = self.vert, -1 * self.horiz
+            else:
+               self.horiz, self.vert = -1 * self.vert, self.horiz
+         elif rotation == 2:
+            self.horiz, self.vert = -1 * self.vert, -1 * self.horiz
+         else:
+            if iType == "R":
+               self.horiz, self.vert = -1 * self.vert, self.horiz
+            else:
+               self.horiz, self.vert = self.vert, -1 * self.horiz
+      else:
+         payload: int = int(instruction[1:])
+         # directional or forward
+         if iType == Direction.NORTH.value:
+            self.vert += payload
+         elif iType == Direction.EAST.value:
+            self.horiz += payload
+         elif iType == Direction.SOUTH.value:
+            self.vert -= payload
+         elif iType == Direction.WEST.value:
+            self.horiz -= payload
+         else:
+            print("ERROR, Forward not supported for waypoint")
 
 def main():
    instructions: List[str] = [i.strip() for i in readFile(FILEPATH)]
@@ -88,6 +141,22 @@ def main():
       if DEBUGGING:
          print(f" {i} | {boat.horiz} {boat.vert} {boat.curDirection.value} ")
    print(f"Part 1 -- Manhattan Distance: {boat.calculateManhattanDistance()}")
+
+   # Part 2
+   boat = Ferry(Direction.EAST, 0, 0)
+   wayPoint: Waypoint = Waypoint(Direction.EAST, 10, 1)
+
+   for i in instructions:
+      if i[0] == Direction.FORWARD.value:
+         boat.moveRelativeToWaypoint(int(i[1:]), wayPoint.horiz, wayPoint.vert)
+      else:
+         wayPoint.consumeWaypointInstruction(i)
+      
+      if DEBUGGING:
+         print(f" {i} | {boat.horiz} {boat.vert} {boat.curDirection.value} ")
+         print(f" {i} | {wayPoint.horiz} {wayPoint.vert} ", end="\n\n")
+      
+   print(f"Part 2 -- Manhattan Distance: {boat.calculateManhattanDistance()}")
 
 if __name__ == "__main__":
    main()
