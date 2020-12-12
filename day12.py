@@ -153,8 +153,31 @@ if __name__ == "__main__":
    main()
 
 """
-
+--- Day 12: Rain Risk ---
 --- Part One ---
-
+Unfortunately, the ship's navigation computer seems to be malfunctioning; rather than giving a route
+directly to safety, it produced extremely circuitous instructions. When the captain uses the PA system
+to ask if anyone can help, you quickly volunteer.
+    Action N means to move north by the given value.
+    Action S means to move south by the given value.
+    Action E means to move east by the given value.
+    Action W means to move west by the given value.
+    Action L means to turn left the given number of degrees.
+    Action R means to turn right the given number of degrees.
+    Action F means to move forward by the given value in the direction the ship is currently facing.
+Figure out where the navigation instructions lead. What is the Manhattan distance between that location
+and the ship's starting position?
 --- Part Two ---
+Before you can give the destination to the captain, you realize that the actual action meanings were
+printed on the back of the instructions the whole time.
+Almost all of the actions indicate how to move a waypoint which is relative to the ship's position:
+    Action N means to move the waypoint north by the given value.
+    Action S means to move the waypoint south by the given value.
+    Action E means to move the waypoint east by the given value.
+    Action W means to move the waypoint west by the given value.
+    Action L means to rotate the waypoint around the ship left (counter-clockwise) the given number of degrees.
+    Action R means to rotate the waypoint around the ship right (clockwise) the given number of degrees.
+    Action F means to move forward to the waypoint a number of times equal to the given value.
+Figure out where the navigation instructions actually lead. What is the Manhattan distance between
+that location and the ship's starting position?
 """
