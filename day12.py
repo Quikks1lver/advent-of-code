@@ -86,13 +86,13 @@ class Ferry:
       self.horiz += horizPayload
       self.vert += vertPayload
 
-class Waypoint(Ferry):
+class Waypoint():
    """
-   Represents a waypoint, based off of a Ferry
+   Represents a waypoint
    """
-
-   def __init__(self, curDirection: Direction, horiz: int, vert: int):
-      super(Waypoint, self).__init__(curDirection, horiz, vert)
+   def __init__(self, horiz: int, vert: int):
+      self.horiz = horiz
+      self.vert = vert
    
    def consumeWaypointInstruction(self, instruction: str) -> None:
       """
@@ -133,30 +133,21 @@ class Waypoint(Ferry):
 def main():
    instructions: List[str] = [i.strip() for i in readFile(FILEPATH)]
 
-   boat: Ferry = Ferry(Direction.EAST, 0, 0)
-
    # Part 1
+   boat: Ferry = Ferry(Direction.EAST, 0, 0)
    for i in instructions:
       boat.consumeInstruction(i)
-      if DEBUGGING:
-         print(f" {i} | {boat.horiz} {boat.vert} {boat.curDirection.value} ")
    print(f"Part 1 -- Manhattan Distance: {boat.calculateManhattanDistance()}")
 
    # Part 2
    boat = Ferry(Direction.EAST, 0, 0)
-   wayPoint: Waypoint = Waypoint(Direction.EAST, 10, 1)
-
+   wayPoint: Waypoint = Waypoint(10, 1)
    for i in instructions:
       if i[0] == Direction.FORWARD.value:
          boat.moveRelativeToWaypoint(int(i[1:]), wayPoint.horiz, wayPoint.vert)
       else:
          wayPoint.consumeWaypointInstruction(i)
-      
-      if DEBUGGING:
-         print(f" {i} | {boat.horiz} {boat.vert} {boat.curDirection.value} ")
-         print(f" {i} | {wayPoint.horiz} {wayPoint.vert} ", end="\n\n")
-      
-   print(f"Part 2horiz -- Manhattan Distance: {boat.calculateManhattanDistance()}")
+   print(f"Part 2 -- Manhattan Distance: {boat.calculateManhattanDistance()}")
 
 if __name__ == "__main__":
    main()
