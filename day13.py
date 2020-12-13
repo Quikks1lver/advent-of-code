@@ -88,16 +88,39 @@ def main():
 
    # Part 2
    fullBusSchedule: List[str] = inputLines[1].strip().split(",")
-   # print(fullBusSchedule)
    busOrder: List[List[int]] = findBusOrder(fullBusSchedule)
-   # findGoldenTime(busOrder)
+   print(f"Part 2 -- Special Time: TBD")
 
 if __name__ == "__main__":
    main()
 
 """
-
+--- Day 13: Shuttle Search ---
 --- Part One ---
-
+Bus schedules are defined based on a timestamp that measures the number of minutes since some fixed
+reference point in the past. At timestamp 0, every bus simultaneously departed from the sea port.
+After that, each bus travels to the airport, then various other locations, and finally returns to the
+sea port to repeat its journey forever.
+The time this loop takes a particular bus is also its ID number: the bus with ID 5 departs from the
+sea port at timestamps 0, 5, 10, 15, and so on. The bus with ID 11 departs at 0, 11, 22, 33, and so
+on. If you are there when the bus departs, you can ride that bus to the airport!
+What is the ID of the earliest bus you can take to the airport multiplied by the number of minutes
+you'll need to wait for that bus?
 --- Part Two ---
+The shuttle company is running a contest: one gold coin for anyone that can find the earliest timestamp
+such that the first bus ID departs at that time and each subsequent listed bus ID departs at that
+subsequent minute. (The first line in your input is no longer relevant.)
+For example, suppose you have the same list of bus IDs as above:
+7,13,x,x,59,x,31,19
+An x in the schedule means there are no constraints on what bus IDs must depart at that time.
+This means you are looking for the earliest timestamp (called t) such that:
+    Bus ID 7 departs at timestamp t.
+    Bus ID 13 departs one minute after timestamp t.
+    There are no requirements or restrictions on departures at two or three minutes after timestamp t.
+    Bus ID 59 departs four minutes after timestamp t.
+    There are no requirements or restrictions on departures at five minutes after timestamp t.
+    Bus ID 31 departs six minutes after timestamp t.
+    Bus ID 19 departs seven minutes after timestamp t.
+However, with so many bus IDs in your list, surely the actual earliest timestamp will be larger than 100000000000000!
+What is the earliest timestamp such that all of the listed bus IDs depart at offsets matching their positions in the list?
 """
