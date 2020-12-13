@@ -52,6 +52,8 @@ def findBusOrder(fullBusSchedule: List[str]) -> (List[List[int]]):
    
    return busOrder
 
+# My attempt at pt2
+# This algorithm is sound and works, but it takes a VERY LONG TIME for arbitrarily large inputs
 def findSpecialTime(busOrder: List[List[int]]) -> int:
    """
    Finds the special time that will have the part 2 solution
@@ -86,10 +88,10 @@ def main():
    partOne: int = calculateWeightedWaitTime(yourTime, onlyValidBuses)
    print(f"Part 1 -- Time Diff: {partOne}")
 
-   # Part 2
+   # (my attempt at) Part 2
    fullBusSchedule: List[str] = inputLines[1].strip().split(",")
    busOrder: List[List[int]] = findBusOrder(fullBusSchedule)
-   print(f"Part 2 -- Special Time: TBD")
+   print("Part 2 -- Special Time: I admit defeat, for now xD")
 
 if __name__ == "__main__":
    main()
