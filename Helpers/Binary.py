@@ -12,3 +12,17 @@ def convertBinaryToDecimal(num: str) -> int:
       multiplier *= 2
    
    return decimalNum
+
+def convertDecimalToBitString(num: str) -> str:
+   """
+   Converts a decimal string to a bit string
+   """
+   num = int(num)
+   bitString: str = ""
+
+   while num > 0:
+      remainder = num % 2
+      num = num // 2
+      bitString = str(remainder) + bitString
+   
+   return bitString
