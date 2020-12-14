@@ -88,7 +88,16 @@ def unmask(numMap: Dict[int, int], maskMap: Dict[int, int]) -> int:
 
    return num
 
-def parseInputPart1(inputLines: List[str]) -> int:
+def sumValues(map: dict) -> int:
+   """
+   Sums dict's values
+   """
+   total: int = 0
+   for v in map.values():
+      total += v
+   return total
+
+def parseMasksForNumbers(inputLines: List[str]) -> int:
    """
    Parses input and returns sum of whatever's left over in memory at the end
    """
@@ -107,13 +116,9 @@ def parseInputPart1(inputLines: List[str]) -> int:
          numMap = maskToMap(num, False)
          memory[memAddress] = unmask(numMap, maskMap)
 
-   total: int = 0
-   for v in memory.values():
-      total += v
-   
-   return total
+   return sumValues(memory)
 
-def parseInputPart2(inputLines: List[str]) -> int:
+def parseMasksForAddresses(inputLines: List[str]) -> int:
    """
    Parses input and returns sum of whatever's left over in memory at the end
    """
@@ -138,21 +143,17 @@ def parseInputPart2(inputLines: List[str]) -> int:
          for address in addressList:
             memory[address] = int(num)
 
-   total: int = 0
-   for v in memory.values():
-      total += v
-   
-   return total
+   return sumValues(memory)
 
 def main():
    inputLines: List[str] = [line.strip() for line in readFile(FILEPATH)]
 
    # Part 1
-   total: int = parseInputPart1(inputLines)
+   total: int = parseMasksForNumbers(inputLines)
    print(f"Part 1 -- Total left in memory: {total}")
 
    # Part 2
-   total: int = parseInputPart2(inputLines)
+   total: int = parseMasksForAddresses(inputLines)
    print(f"Part 2 -- Total left in memory: {total}")
 
 if __name__ == "__main__":
