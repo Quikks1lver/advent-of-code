@@ -1,5 +1,6 @@
 # 12/5/20
 
+from Helpers.Binary import convertBinaryToDecimal
 from Helpers.FileHelper import readFile
 from typing import List
 FILEPATH: str = "Input/day5.txt"
@@ -9,19 +10,6 @@ def createTicketList(filename:str) -> List[str]:
    Returns a list of tickets from a file
    """
    return [line.strip() for line in readFile(filename)]
-
-def convertBinaryToDecimal(num: str) -> int:
-   """
-   Converts a binary string to a decimal number
-   """
-   multiplier: int = 1
-   decimalNum: int = 0
-
-   for c in reversed(num):
-      decimalNum += (int(c) * multiplier)
-      multiplier *= 2
-   
-   return decimalNum
 
 def calculateTicketID(ticket: str) -> int:
    """
