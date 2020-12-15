@@ -32,3 +32,14 @@ def readFileWithEmptyLineBreaks(filepath: str) -> List[str]:
    outputList.append(tempLine.strip()) # don't forget last one!
 
    return outputList
+
+def readOneLineFileWithCommas(filepath: str) -> List[str]:
+   """
+   Reads a file that is one line long, separated by commas
+   """
+   try:
+      with open(filepath) as fp:
+         s: str = fp.readline()
+         return s.split(",")
+   except:
+      raise Exception(f"Failed to open {filepath}")
