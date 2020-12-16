@@ -1,5 +1,6 @@
 # 12/13/20
 
+from Helpers.AOC import whiteFlag
 from Helpers.FileHelper import readFile
 from typing import List, Tuple
 FILEPATH: str = "Input/day13.txt"
@@ -91,7 +92,7 @@ def main():
    # (my attempt at) Part 2
    fullBusSchedule: List[str] = inputLines[1].strip().split(",")
    busOrder: List[List[int]] = findBusOrder(fullBusSchedule)
-   print("Part 2 -- Special Time: I admit defeat, for now xD")
+   whiteFlag(2, "Special Time", "12/13")
 
 if __name__ == "__main__":
    main()

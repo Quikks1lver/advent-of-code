@@ -1,7 +1,8 @@
 # 12/16/20
 
-from Helpers.FileHelper import readFile, readFileWithEmptyLineBreaks
-from typing import List
+from Helpers.AOC import whiteFlag
+from Helpers.FileHelper import readFileWithEmptyLineBreaks
+from typing import List, Set
 import re
 FILEPATH: str = "Input/day16.txt"
 
@@ -76,6 +77,76 @@ def calculateErrorRate(fieldsList: List[Field], nearbyTickets: List[str]) -> int
    
    return sum
 
+def constructValidTicketList(fieldsList: List[Field], nearbyTickets: List[str]) -> int:
+   """
+   Finds invalid tickets and removes them entirely. Returns new, curated, good tickets
+   """
+   goodTicketList: List[str] = []
+
+   goodOne: bool = True
+   for ticket in nearbyTickets:
+      goodOne = True
+      nums: List[int] = [int(t) for t in ticket.split(",")]
+
+      for x in nums:
+         flag: bool = True
+         
+         for field in fieldsList:
+            if field.isValidNum(x):
+               flag = False
+               break
+         
+         if flag:
+            goodOne = False
+      
+      if goodOne:
+         goodTicketList.append(ticket)
+   
+   return goodTicketList
+
+def determineFieldTicketRelationships(fieldsList: List[Field], rawTicketInput: List[str]) -> List[str]:
+   """
+   Determines which fields map to which ticket answers, outputs list
+   """
+   goodTicketsAsStrings: List[str] = constructValidTicketList(fieldsList, rawTicketInput)
+   goodTicketsAsNums: List[List[int]] = []
+   for ticket in goodTicketsAsStrings:
+      goodTicketsAsNums.append([int(x) for x in ticket.split(",")])
+
+   validFieldsSoFar: Set[int] = set()
+   first: bool = True
+
+   outputArr: List[str] = [0] * len(goodTicketsAsNums[0])
+
+   for col in range(len(goodTicketsAsNums[0])):
+      validFieldsSoFar.clear()
+      first = True
+      
+      for row in range(len(goodTicketsAsNums)):
+         element: int = goodTicketsAsNums[row][col]
+         
+         if first:
+            for i in range(len(fieldsList)):
+               if fieldsList[i].isValidNum(element):
+                  validFieldsSoFar.add(i)
+            first = False
+
+         else:
+            tempSet: Set[int] = validFieldsSoFar.copy()
+
+            for i in validFieldsSoFar:
+               if not fieldsList[i].isValidNum(element):
+                  tempSet.remove(i)
+
+            validFieldsSoFar = tempSet
+
+      if len(validFieldsSoFar) == 1:
+         outputArr[col] = list(validFieldsSoFar)[0]
+      else:
+         outputArr[col] = list(validFieldsSoFar)
+
+   return outputArr
+
 def main():
    allInputLines: List[str] = readFileWithEmptyLineBreaks(FILEPATH)
    
@@ -87,6 +158,10 @@ def main():
    
    # Part 1
    print(f"Part 1 -- Error Rate: {calculateErrorRate(fieldsList, nearbyTicketInput)}")
+   
+   # Part 2
+   relationships: List[str] = determineFieldTicketRelationships(fieldsList, nearbyTicketInput)
+   whiteFlag(2, "Product of Departure Tickets", "12/16")
 
 if __name__ == "__main__":
    main()
