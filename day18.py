@@ -109,8 +109,17 @@ if __name__ == "__main__":
    main()
 
 """
-
+--- Day 18: Operation Order ---
 --- Part One ---
-
+The homework (your puzzle input) consists of a series of expressions that consist of addition (+),
+multiplication (*), and parentheses ((...)). Just like normal math, parentheses indicate that the expression
+inside must be evaluated before it can be used by the surrounding expression. Addition still finds the
+sum of the numbers on both sides of the operator, and multiplication still finds the product.
+However, the rules of operator precedence have changed. Rather than evaluating multiplication before
+addition, the operators have the same precedence, and are evaluated left-to-right regardless of the
+order in which they appear.
+Before you can help with the homework, you need to understand it yourself. Evaluate the expression on
+each line of the homework; what is the sum of the resulting values?
 --- Part Two ---
+TBD
 """
