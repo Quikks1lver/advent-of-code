@@ -1,4 +1,0 @@
-As of 12/19, I will take a break from the puzzles for this year, but I want to come back at a later
-time to tackle the challenges which I didn't complete earlier. My end stats are in the aoc_results.png
-file, so feel free to view it =)
-- Adam F
