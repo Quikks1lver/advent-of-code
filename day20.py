@@ -55,7 +55,7 @@ def doBordersMatch(s1: str, s2: str) -> bool:
       return True
    return False
 
-def calculatefourCornersProduct(tiles: List[Tile]) -> int:
+def calculateFourCornersProduct(tiles: List[Tile]) -> int:
    """
    Finds 4 corners tiles and multiplies IDs
    """
@@ -82,7 +82,7 @@ def calculatefourCornersProduct(tiles: List[Tile]) -> int:
       
       # The key to this problem is that corner tiles only have *2* adjacencies in this square grid
       if sharedBorders == 2:
-         fourCornersProduct *= int(tiles[i].identification)
+         fourCornersProduct *= tiles[i].identification
 
    return fourCornersProduct
 
@@ -93,11 +93,11 @@ def main():
 
    for line in inputLines:
       tileInfo: List[str] = [l.strip() for l in line.split("\n")]
-      identificationInfo: int = identificationRegex.match(tileInfo[0])[2]
+      identificationInfo: int = int(identificationRegex.match(tileInfo[0])[2])
       tiles.append(Tile(identificationInfo, tileInfo[1:]))
 
    # Part 1
-   print(f"Part 1 -- 4 Corners Product: {calculatefourCornersProduct(tiles)}")
+   print(f"Part 1 -- 4 Corners Product: {calculateFourCornersProduct(tiles)}")
 
    # Part 2
    whiteFlag(2, "Roughness", "12/20")
