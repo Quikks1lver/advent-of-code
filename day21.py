@@ -72,10 +72,9 @@ def countNumNonAllergenIngredients(finalAllergenMap: Dict[str, str], allIngredie
    nonAllergenIngredients: List[str] = allIngredients.copy()
 
    for i in range(len(nonAllergenIngredients) - 1, -1, -1):
-      for allergenIngredient in finalAllergenMap.values():
-         if allergenIngredient == nonAllergenIngredients[i]:
+         if nonAllergenIngredients[i] in finalAllergenMap.values():
             nonAllergenIngredients.pop(i)
-
+   
    return len(nonAllergenIngredients)
 
 def constructCanonicalDangerousIngredients(finalAllergenMap: Dict[str, str]) -> str:
