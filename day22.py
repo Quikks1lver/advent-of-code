@@ -101,14 +101,12 @@ def playRecursiveCombat(playerOne: Player, playerTwo: Player, printWinner: bool)
    """
    numRounds: int = 0
    prevDecks: Set[str] = set()
-   recursed: bool = False
 
    while len(playerOne.deck) > 0 and len(playerTwo.deck) > 0:
       # prevents infinite recursion
       setVal: str = str(playerOne.deck) + str(playerTwo.deck)
       if setVal in prevDecks:
-         recursed = True
-         break
+         return 1
       prevDecks.add(setVal)
    
       wonCards: List[int] = []
@@ -144,9 +142,6 @@ def playRecursiveCombat(playerOne: Player, playerTwo: Player, printWinner: bool)
       
       numRounds += 1
 
-   if recursed:
-      return 1
-
    winner = determineWinner(playerOne, playerTwo, numRounds, printWinner)
    retVal: int = 1 if winner == playerOne else 2
    return retVal
@@ -155,19 +150,18 @@ def main():
    inputLines: List[str] = readFileWithEmptyLineBreaks(FILEPATH)
    
    deckOne, deckTwo = splitDecks(inputLines)
-   playerOne, playerTwo = Player("one", deckOne), Player("two", deckTwo)
    
    # Part 1
-   winner: int = playCombat(playerOne, playerTwo, False)
-   winningScore: int = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
+   playerOne, playerTwo = Player("one", deckOne), Player("two", deckTwo)
+   winner = playCombat(playerOne, playerTwo, False)
+   winningScore = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
    print(f"Part 1 -- Player {winner}'s Winning Score (normal combat): {winningScore}")
 
    # Part 2
    playerOne, playerTwo = Player("one", deckOne), Player("two", deckTwo) # resets players
-   print("... takes ~30-45 seconds due to recursion")
-   
+   print("... takes ~5-15 seconds due to recursion (at least on my system)")
    winner = playRecursiveCombat(playerOne, playerTwo, False)
-   winningScore: int = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
+   winningScore = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
    print(f"Part 2 -- Player {winner}'s Winning Score (recursive combat): {winningScore}")
 
 if __name__ == "__main__":
