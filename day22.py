@@ -24,6 +24,16 @@ class Player:
       """
       for c in cards:
          self.deck.append(c)
+   
+   def calculateScore(self) -> int:
+      """
+      Calculates a player's score
+      """
+      count, score = 1, 0
+      for i in range(len(self.deck) - 1, -1, -1):
+         score += self.deck[i] * count
+         count += 1
+      return score
 
    def __repr__(self):
       return f"{self.name} -- {self.deck}"
@@ -64,16 +74,6 @@ def playCombat(playerOne: Player, playerTwo: Player, printWinner: bool) -> int:
       print(f"After {numRounds} rounds, winner is: {winner}")
    return retVal
 
-def calculatePlayerScore(player: Player) -> int:
-   """
-   Calculates a player's score
-   """
-   count, score = 1, 0
-   for i in range(len(player.deck) - 1, -1, -1):
-      score += player.deck[i] * count
-      count += 1
-   return score
-
 def main():
    inputLines: List[str] = readFileWithEmptyLineBreaks(FILEPATH)
    
@@ -82,7 +82,7 @@ def main():
    
    # Part 1
    winner: int = playCombat(playerOne, playerTwo, False)
-   winningScore: int = calculatePlayerScore(playerOne) if winner == 1 else calculatePlayerScore(playerTwo)
+   winningScore: int = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
    print(f"Part 1 -- Player {winner}'s Winning Score: {winningScore}")
 
    # Part 2
