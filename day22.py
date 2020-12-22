@@ -1,7 +1,7 @@
 # 12/22/20
 
-from Helpers.FileHelper import readFile, readFileWithEmptyLineBreaks
-from typing import List
+from Helpers.FileHelper import readFileWithEmptyLineBreaks
+from typing import List, Union
 FILEPATH: str = "Input/day22.txt"
 
 class Player:
@@ -10,7 +10,7 @@ class Player:
    """
    def __init__(self, name: str, deck: List[int]):
       self.name = name
-      self.deck = deck
+      self.deck = deck.copy()
    
    def throwDownCard(self) -> int:
       """
@@ -46,9 +46,24 @@ def splitDecks(inputLines: List[str]) -> (List[int], List[int]):
    deckTwo: List[int] = [int(s.strip()) for s in inputLines[1][inputLines[1].index(":") + 2:].split("\n")]
    return deckOne, deckTwo
 
+def determineWinner(playerOne: Player, playerTwo: Player, numRounds: int, printWinner: bool) -> Union[None, Player]:
+   """
+   Determines winner after a game of Combat (or none if unfinished game) and prints winner, if wanted
+   """
+   # game is not over
+   if len(playerOne.deck) != 0 and len(playerTwo.deck) != 0:
+      return None
+
+   winner: Player = playerOne if len(playerOne.deck) != 0 else playerTwo
+   if printWinner:
+      print(f"After {numRounds} rounds, winner is: {winner}")
+   
+   return winner
+
 def playCombat(playerOne: Player, playerTwo: Player, printWinner: bool) -> int:
    """
    Plays the game of combat and optionally prints which player wins; returns an int representing who won (1|2)
+   WARNING: mutates decks
    """
    numRounds: int = 0
 
@@ -67,11 +82,8 @@ def playCombat(playerOne: Player, playerTwo: Player, printWinner: bool) -> int:
       
       numRounds += 1
 
-   winner: Player = playerOne if len(playerOne.deck) != 0 else playerTwo
+   winner = determineWinner(playerOne, playerTwo, numRounds, printWinner)
    retVal: int = 1 if winner == playerOne else 2
-   
-   if printWinner:
-      print(f"After {numRounds} rounds, winner is: {winner}")
    return retVal
 
 def main():
@@ -86,6 +98,7 @@ def main():
    print(f"Part 1 -- Player {winner}'s Winning Score: {winningScore}")
 
    # Part 2
+   playerOne, playerTwo = Player("one", deckOne), Player("two", deckTwo) # resets players
 
 if __name__ == "__main__":
    main()
