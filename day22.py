@@ -1,7 +1,7 @@
 # 12/22/20
 
 from Helpers.FileHelper import readFileWithEmptyLineBreaks
-from typing import List, Union
+from typing import List, Union, Set
 FILEPATH: str = "Input/day22.txt"
 
 class Player:
@@ -86,6 +86,71 @@ def playCombat(playerOne: Player, playerTwo: Player, printWinner: bool) -> int:
    retVal: int = 1 if winner == playerOne else 2
    return retVal
 
+def shouldRecurse(playerOne: Player, playerTwo: Player, cardOne: int, cardTwo: int) -> bool:
+   """
+   Determines whether the recursive combat game should recurse or not
+   """
+   if len(playerOne.deck) >= cardOne and len(playerTwo.deck) >= cardTwo:
+      return True
+   return False
+
+def playRecursiveCombat(playerOne: Player, playerTwo: Player, printWinner: bool) -> int:
+   """
+   Plays the game of RECURSIVE combat and optionally prints which player wins; returns an int
+   representing who won (1|2). WARNING: mutates decks
+   """
+   numRounds: int = 0
+   prevDecks: Set[str] = set()
+   recursed: bool = False
+
+   while len(playerOne.deck) > 0 and len(playerTwo.deck) > 0:
+      # prevents infinite recursion
+      setVal: str = str(playerOne.deck) + str(playerTwo.deck)
+      if setVal in prevDecks:
+         recursed = True
+         break
+      prevDecks.add(setVal)
+   
+      wonCards: List[int] = []
+      numOne = playerOne.throwDownCard()
+      numTwo = playerTwo.throwDownCard()
+
+      # recurse
+      if shouldRecurse(playerOne, playerTwo, numOne, numTwo):
+         tempPlayerOne: Player = Player(f"one, recursive", playerOne.deck[0 : numOne])
+         tempPlayerTwo: Player = Player(f"two, recursive", playerTwo.deck[0 : numTwo])
+
+         recursiveRoundWinner = playRecursiveCombat(tempPlayerOne, tempPlayerTwo, printWinner)
+
+         if recursiveRoundWinner == 1:
+            wonCards.append(numOne)
+            wonCards.append(numTwo)
+            playerOne.wonHand(wonCards)
+         else:
+            wonCards.append(numTwo)
+            wonCards.append(numOne)
+            playerTwo.wonHand(wonCards)
+               
+      # don't recurse
+      else:
+         wonCards.append(numOne)
+         wonCards.append(numTwo)
+         wonCards.sort(reverse=True)
+
+         if numOne > numTwo:
+            playerOne.wonHand(wonCards)
+         else:
+            playerTwo.wonHand(wonCards)
+      
+      numRounds += 1
+
+   if recursed:
+      return 1
+
+   winner = determineWinner(playerOne, playerTwo, numRounds, printWinner)
+   retVal: int = 1 if winner == playerOne else 2
+   return retVal
+
 def main():
    inputLines: List[str] = readFileWithEmptyLineBreaks(FILEPATH)
    
@@ -95,10 +160,15 @@ def main():
    # Part 1
    winner: int = playCombat(playerOne, playerTwo, False)
    winningScore: int = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
-   print(f"Part 1 -- Player {winner}'s Winning Score: {winningScore}")
+   print(f"Part 1 -- Player {winner}'s Winning Score (normal combat): {winningScore}")
 
    # Part 2
    playerOne, playerTwo = Player("one", deckOne), Player("two", deckTwo) # resets players
+   print("... takes ~30-45 seconds due to recursion")
+   
+   winner = playRecursiveCombat(playerOne, playerTwo, False)
+   winningScore: int = playerOne.calculateScore() if winner == 1 else playerTwo.calculateScore()
+   print(f"Part 2 -- Player {winner}'s Winning Score (recursive combat): {winningScore}")
 
 if __name__ == "__main__":
    main()
