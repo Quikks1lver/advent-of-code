@@ -1,7 +1,7 @@
 # 12/23/20
 
 from Helpers.FileHelper import readFile
-from typing import List, Set
+from typing import Any, List, Set, Union
 FILEPATH: str = "Input/day23.txt"
 
 class Cups:
@@ -12,6 +12,13 @@ class Cups:
       self.nums: List[int] = []
       for ch in cups:
          self.nums.append(int(ch))
+   
+   def replaceCups(self, cupsList: List[int]) -> None:
+      """
+      Replaces cups/nums with the parameter
+      """
+      self.nums.clear()
+      self.nums = cupsList
    
    def getLength(self) -> int:
       """
@@ -90,6 +97,18 @@ class Cups:
          count += 1
 
       return s
+   
+   def getTwoAfterX(self, x: int) -> (int, int):
+      """
+      Finds two cups after cup X, if they exist
+      """
+      try:
+         index: int = self.nums.index(x)
+      except:
+         print(f"Invalid X in getTwoAfterX()")
+         return None, None
+      
+      return self.nums[index + 1], self.nums[index + 2]
 
    def __repr__(self):
       return f"Cups game config: __{self.nums}__"
@@ -103,6 +122,17 @@ def main():
    print(f"Part 1 -- Cups order after cup #1: {game.stringify(1)[1:]}")
 
    # Part 2
+   # This algorithm is sound, but it takes a LONG TIME . . .
+   # Thus, I wasn't able to get the answer in reasonable time. I will find a way to speed it up.
+   millionCups: List[int] = []
+   for ch in inputLine:
+      millionCups.append(int(ch))
+   for i in range(len(millionCups) + 1, 1000001, 1):
+      millionCups.append(i)
+   
+   game.replaceCups(millionCups)
+   # game.move(10000000)
+   print(f"Part 2 -- 2 cups after cup #1: {game.getTwoAfterX(1)} <- this is wrong (my current algo takes too long)")
 
 if __name__ == "__main__":
    main()
