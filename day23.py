@@ -29,9 +29,9 @@ class Cups:
       for i in range(len(nums) - 1, -1, -1):
          self.nums.insert(index, nums[i])
    
-   def move(self, roundNum: int, printAfterEachRound: bool) -> None:
+   def move(self, roundNum: int) -> None:
       """
-      Simulates moves for x rounds, and optionally prints config after each round
+      Simulates moves for x rounds. Modifies game's numbers list in place
       """
       if roundNum <= 0:
          return
@@ -42,10 +42,7 @@ class Cups:
       pickedUpCups: List[int] = []
       first: bool = True
       
-      for i in range(1, roundNum + 1, 1):
-         if printAfterEachRound:
-            print(f"After round {i} -- {self.nums} | ", end="")
-         
+      for i in range(1, roundNum + 1, 1):         
          if not first:
             currentIndex = (self.nums.index(currentNum) + 1) % self.getLength()
          first = False
@@ -71,12 +68,6 @@ class Cups:
          
          destinationIndex = (self.nums.index(destinationNum) + 1) % self.getLength()
          self.addNums(destinationIndex, pickedUpCups)
-
-         if printAfterEachRound:
-            print(f"cur: {currentNum} | dest: {destinationNum} | picked up cups: {pickedUpCups}")
-
-      if printAfterEachRound:
-         print(f"Last: {self.nums}")
    
    def stringify(self, x: int) -> str:
       """
@@ -85,6 +76,7 @@ class Cups:
       """
       s: str = ""
       index: int = 0
+      
       try:
          index: int = self.nums.index(x)
       except:
@@ -106,7 +98,7 @@ def main():
    game: Cups = Cups(inputLine)
    
    # Part 1
-   game.move(100, False)
+   game.move(100)
    print(game.stringify(1)[1:])
 
    # Part 2
