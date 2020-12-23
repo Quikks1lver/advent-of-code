@@ -9,9 +9,7 @@ class Cups:
    Representing a game of cups
    """
    def __init__(self, cups: str):
-      self.nums: List[int] = []
-      for ch in cups:
-         self.nums.append(int(ch))
+      self.nums: List[int] = [int(ch) for ch in cups]
    
    def replaceCups(self, cupsList: List[int]) -> None:
       """
