@@ -5,13 +5,6 @@ from Helpers.FileHelper import readFile
 from typing import Dict, List, Set, Tuple
 FILEPATH: str = "Input/day24.txt"
 
-class TileColors(Enum):
-   """
-   Colors of the floor tiles
-   """
-   WHITE = 0
-   BLACK = 1
-
 class HexDirections(Enum):
    """
    6 hexagonal directions
@@ -61,93 +54,70 @@ def tokenizeHexString(s: str) -> Tuple[int, int, int]:
    
    return (x, y, z)
 
-def countTurnedOverTiles(tiles: List[Tuple[int, int, int]]) -> int:
+def createBlackTilesSet(tiles: List[Tuple[int, int, int]]) -> Set[Tuple[int, int, int]]:
    """
-   Counts how many tiles are turned over (black tiles)
+   Creates a set of black tiles
    """
-   blackTiles: Set[HexTile] = set()
+   blackTiles: Set[Tuple[int, int, int]] = set()
 
-   for tile in tiles:
-      if tile in blackTiles:
-         blackTiles.remove(tile)
+   for (x, y, z) in tiles:
+      if (x, y, z) in blackTiles:
+         blackTiles.remove( (x, y, z) )
       else:
-         blackTiles.add(tile)
+         blackTiles.add( (x, y, z) )
    
-   return len(blackTiles)
+   return blackTiles
 
-def initializeTileMap(tiles: List[Tuple[int, int, int]]) -> Dict[Tuple[int, int, int], TileColors]:
+def flipTiles(blackTiles: Set[Tuple[int, int, int]], numDays: int) -> Set[Tuple[int, int, int]]:
    """
-   Initalizes and returns a tile map of { key: coordinate, value: color }
-   """
-   tileMap: Dict[Tuple[int, int, int], TileColors] = dict()
-   
-   for tile in tiles:
-      if tile in tileMap:
-         tileMap[tile] = TileColors.WHITE if tileMap[tile] == TileColors.BLACK else TileColors.BLACK
-      else:
-         tileMap[tile] = TileColors.BLACK
-   
-   return tileMap
-
-def flipTiles(tileMap: Dict[Tuple[int, int, int], TileColors]) -> None:
-   """
-   Takes in a tile map and flips them (modifying the given dict), according to these rules:
+   Takes in a set of black tiles map and flips them, according to these rules:
    - Any black tile with zero or more than 2 black tiles immediately adjacent to it is flipped to white.
    - Any white tile with exactly 2 black tiles immediately adjacent to it is flipped to black.
    """
    #                                         East       West      Northeast   Northwest   Southeast   Southwest
    moves: List[Tuple[int, int, int]] = [ (1, -1, 0), (-1, 1, 0), (1, 0, -1), (0, 1, -1), (0, -1, 1), (-1, 0, 1) ]
-   newMap: Dict[Tuple[int, int, int], TileColors] = tileMap.copy()
-   
-   count = 0
-   for k, v in tileMap.items():
-      numBlackTiles: int = 0
+   newSet: Set[Tuple[int, int, int]] = set()
+   tilesToCheck: Set[Tuple[int, int, int]] = set()
 
-      for move in moves:
-         newX, newY, newZ = k[0] + move[0], k[1] + move[1], k[2] + move[2]
-         newCoord: Tuple[int, int, int] = (newX, newY, newZ)
+   for i in range(numDays):
+      newSet = blackTiles.copy()
+      
+      # Check all tiles around a black tile, including the black tile itself
+      for (x, y, z) in blackTiles:
+         tilesToCheck.add( (x, y, z) )
 
-         if newCoord in tileMap:
-            if tileMap[newCoord] == TileColors.BLACK:
+         for (dx, dy, dz) in moves:
+            tilesToCheck.add( (x + dx, y + dy, z + dz) )
+      
+      for (x, y, z) in tilesToCheck:
+         numBlackTiles: int = 0
+
+         for (dx, dy, dz) in moves:
+            if (x + dx, y + dy, z + dz) in blackTiles:
                numBlackTiles += 1
+
+         if (x, y, z) in blackTiles and (numBlackTiles == 0 or numBlackTiles > 2):
+            newSet.remove( (x, y, z) )
+         if (x, y, z) not in blackTiles and numBlackTiles == 2:
+            newSet.add( (x, y, z) )
       
-      if v == TileColors.WHITE and numBlackTiles == 2:
-         newMap[k] = TileColors.BLACK
-      
-      if v == TileColors.BLACK and (numBlackTiles == 0 or numBlackTiles > 2):
-         newMap[k] = TileColors.WHITE
-      
-      count += 1
-
-   return newMap
-
-def countBlackTiles(tileMap: Dict[Tuple[int, int, int], TileColors]) -> int:
-   """
-   Counts number of black tiles in the map
-   """
-   count: int = 0
-
-   for v in tileMap.values():
-      if v == TileColors.BLACK:
-         count += 1
-
-   return count
+      blackTiles = newSet
+   
+   return blackTiles
 
 def main():
    inputLines: List[str] = [s.strip() for s in readFile(FILEPATH)]   
    tiles: List[Tuple[int, int, int]] = [tokenizeHexString(line) for line in inputLines]
 
    # Part 1
-   print(f"Part 1 -- Number of black tiles: {countTurnedOverTiles(tiles)}")
+   blackTiles = createBlackTilesSet(tiles)
+   print(f"Part 1 -- Number of black tiles: {len(blackTiles)}")
 
-   # (my attempt at) Part 2
-   tileMap = initializeTileMap(tiles)
-
-   for i in range(101):
-      newMap = flipTiles(tileMap)
-      tileMap = newMap
-   
-   print(f"Part 2 -- Number of black tiles after 100 days of art exhibition: {countBlackTiles(tileMap)} <- wrong as of now")
+   # Part 2
+   # I was very close to the solution on my 2nd attempt, and this YouTube video gave me the
+   # push I needed: https://www.youtube.com/watch?v=xNv7d2crKoc; thanks to Jonathan Paulson!
+   blackTiles = flipTiles(blackTiles, 100)
+   print(f"Part 2 -- Number of black tiles after 100 days of art exhibition: {len(blackTiles)}")
 
 if __name__ == "__main__":
    main()
