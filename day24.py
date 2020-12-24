@@ -2,8 +2,15 @@
 
 from enum import Enum
 from Helpers.FileHelper import readFile
-from typing import List, Set, Tuple
+from typing import Dict, List, Set, Tuple
 FILEPATH: str = "Input/day24.txt"
+
+class TileColors(Enum):
+   """
+   Colors of the floor tiles
+   """
+   WHITE = 0
+   BLACK = 1
 
 class HexDirections(Enum):
    """
@@ -54,7 +61,7 @@ def tokenizeHexString(s: str) -> Tuple[int, int, int]:
    
    return (x, y, z)
 
-def countBlackTiles(tiles: List[Tuple[int, int, int]]) -> int:
+def countTurnedOverTiles(tiles: List[Tuple[int, int, int]]) -> int:
    """
    Counts how many tiles are turned over (black tiles)
    """
@@ -68,15 +75,79 @@ def countBlackTiles(tiles: List[Tuple[int, int, int]]) -> int:
    
    return len(blackTiles)
 
+def initializeTileMap(tiles: List[Tuple[int, int, int]]) -> Dict[Tuple[int, int, int], TileColors]:
+   """
+   Initalizes and returns a tile map of { key: coordinate, value: color }
+   """
+   tileMap: Dict[Tuple[int, int, int], TileColors] = dict()
+   
+   for tile in tiles:
+      if tile in tileMap:
+         tileMap[tile] = TileColors.WHITE if tileMap[tile] == TileColors.BLACK else TileColors.BLACK
+      else:
+         tileMap[tile] = TileColors.BLACK
+   
+   return tileMap
+
+def flipTiles(tileMap: Dict[Tuple[int, int, int], TileColors]) -> None:
+   """
+   Takes in a tile map and flips them (modifying the given dict), according to these rules:
+   - Any black tile with zero or more than 2 black tiles immediately adjacent to it is flipped to white.
+   - Any white tile with exactly 2 black tiles immediately adjacent to it is flipped to black.
+   """
+   #                                         East       West      Northeast   Northwest   Southeast   Southwest
+   moves: List[Tuple[int, int, int]] = [ (1, -1, 0), (-1, 1, 0), (1, 0, -1), (0, 1, -1), (0, -1, 1), (-1, 0, 1) ]
+   newMap: Dict[Tuple[int, int, int], TileColors] = tileMap.copy()
+   
+   count = 0
+   for k, v in tileMap.items():
+      numBlackTiles: int = 0
+
+      for move in moves:
+         newX, newY, newZ = k[0] + move[0], k[1] + move[1], k[2] + move[2]
+         newCoord: Tuple[int, int, int] = (newX, newY, newZ)
+
+         if newCoord in tileMap:
+            if tileMap[newCoord] == TileColors.BLACK:
+               numBlackTiles += 1
+      
+      if v == TileColors.WHITE and numBlackTiles == 2:
+         newMap[k] = TileColors.BLACK
+      
+      if v == TileColors.BLACK and (numBlackTiles == 0 or numBlackTiles > 2):
+         newMap[k] = TileColors.WHITE
+      
+      count += 1
+
+   return newMap
+
+def countBlackTiles(tileMap: Dict[Tuple[int, int, int], TileColors]) -> int:
+   """
+   Counts number of black tiles in the map
+   """
+   count: int = 0
+
+   for v in tileMap.values():
+      if v == TileColors.BLACK:
+         count += 1
+
+   return count
+
 def main():
    inputLines: List[str] = [s.strip() for s in readFile(FILEPATH)]   
    tiles: List[Tuple[int, int, int]] = [tokenizeHexString(line) for line in inputLines]
 
    # Part 1
-   print(f"Part 1 -- Number of black tiles: {countBlackTiles(tiles)}")
+   print(f"Part 1 -- Number of black tiles: {countTurnedOverTiles(tiles)}")
 
-   # Part 2
-   # TBD
+   # (my attempt at) Part 2
+   tileMap = initializeTileMap(tiles)
+
+   for i in range(101):
+      newMap = flipTiles(tileMap)
+      tileMap = newMap
+   
+   print(f"Part 2 -- Number of black tiles after 100 days of art exhibition: {countBlackTiles(tileMap)} <- wrong as of now")
 
 if __name__ == "__main__":
    main()
