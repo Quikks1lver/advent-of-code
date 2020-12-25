@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/day9.txt"
+FILEPATH: str = "Input/day09.txt"
 
 def canTwoSum(numsList: List[int], target: int) -> bool:
    """

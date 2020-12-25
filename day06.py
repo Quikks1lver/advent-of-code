@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFileWithEmptyLineBreaks
 from typing import Dict, List, Set, Tuple, Union
-FILEPATH: str = "Input/day6.txt"
+FILEPATH: str = "Input/day06.txt"
 
 def calculateFormSum(form: str) -> int:
    """

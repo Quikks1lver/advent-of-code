@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/day3.txt"
+FILEPATH: str = "Input/day03.txt"
 
 def buildMountain(filename: str) -> List[str]:
    """

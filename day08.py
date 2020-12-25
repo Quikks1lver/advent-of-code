@@ -3,7 +3,7 @@
 from Helpers.FileHelper import readFile
 from typing import List, Set
 from enum import Enum
-FILEPATH: str = "Input/day8.txt"
+FILEPATH: str = "Input/day08.txt"
 
 class Type(Enum):
    """
