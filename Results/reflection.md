@@ -1,5 +1,5 @@
 # Performance
-I was able to complete ~75-80% of the puzzles during AOC 2020. As this was my first year participating in AOC, I'm quite happy =).
+I was able to complete >80% (41/50*) of the puzzles during AOC 2020. As this was my first year participating in AOC, I'm quite happy =).
 
 # Takeaways
 ## Technical
