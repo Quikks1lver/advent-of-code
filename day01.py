@@ -1,17 +1,30 @@
-lines = []
-with open("day1.txt", "r") as file:
-   lines = [int(line.strip()) for line in file.readlines()]
+from Helpers.FileHelpers import read_lines
+from typing import List
+FILEPATH = "Input/day01.txt"
 
-count = 0
-for i in range(len(lines) - 1):
-   if lines[i + 1] > lines[i]:
-      count += 1 
+def count_increasing_nums(lines: List[int]) -> int:
+   count = 0
 
-print(count)
+   for i in range(len(lines) - 1):
+      if lines[i + 1] > lines[i]:
+         count += 1 
 
-count2 = 0
-for i in range(1, len(lines) - 2):
-   if lines[i - 1] + lines[i] + lines[i+1] < lines[i] + lines[i+1] + lines[i+2]:
-      count2 += 1 
+   return count
 
-print(count2)
+def count_triples(lines: List[int]) -> int:
+   count = 0
+
+   for i in range(1, len(lines) - 2):
+      if lines[i - 1] + lines[i] + lines[i + 1] < lines[i] + lines[i + 1] + lines[i + 2]:
+         count += 1
+   
+   return count
+
+def main():
+   input_nums = [int(line.strip()) for line in read_lines(FILEPATH)]
+
+   print(f"Part 1 -- {count_increasing_nums(input_nums)}")
+   print(f"Part 2 -- {count_triples(input_nums)}")
+
+if __name__ == "__main__":
+   main()
