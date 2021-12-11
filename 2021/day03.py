@@ -1,6 +1,6 @@
 from Helpers.FileHelpers import read_lines
 from typing import List
-FILEPATH = "Input/day03.txt"
+FILEPATH = "2021/Input/day03.txt"
 
 def calculate_power_consumption(diagnostics: List[str]) -> int:
    sums: List[int] = [0] * len(diagnostics[0])

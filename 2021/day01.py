@@ -1,6 +1,6 @@
 from Helpers.FileHelpers import read_lines
 from typing import List
-FILEPATH = "Input/day01.txt"
+FILEPATH = "2021/Input/day01.txt"
 
 def count_increasing_nums(lines: List[int]) -> int:
    count = 0

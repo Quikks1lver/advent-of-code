@@ -1,6 +1,6 @@
 from Helpers.FileHelpers import read_lines
 from typing import List, Dict, Tuple
-FILEPATH = "Input/day10.txt"
+FILEPATH = "2021/Input/day10.txt"
 
 COMPLETION_LOOKUP_TABLE: Dict[str, int] = {")": 1, "]": 2, "}": 3, ">": 4}
 ILLEGAL_LOOKUP_TABLE: Dict[str, int] = {")": 3, "]": 57, "}": 1197, ">": 25137}

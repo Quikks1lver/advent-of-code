@@ -1,6 +1,6 @@
 from Helpers.FileHelpers import read_lines
 from typing import List
-FILEPATH = "Input/day02.txt"
+FILEPATH = "2021/Input/day02.txt"
 
 class Token():
    def __init__(self, string: str):

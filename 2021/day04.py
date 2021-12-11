@@ -1,6 +1,6 @@
 from Helpers.FileHelpers import read_lines
 from typing import List, Set
-FILEPATH = "Input/day04.txt"
+FILEPATH = "2021/Input/day04.txt"
 
 class BingoBoard():
    def __init__(self, board_lines: List[List[str]]):
