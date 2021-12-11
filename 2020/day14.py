@@ -4,7 +4,7 @@ from Helpers.Binary import convertBinaryToDecimal, convertDecimalToBitString # f
 from Helpers.FileHelper import readFile
 from itertools import product
 from typing import Dict, List, Union
-FILEPATH: str = "Input/day14.txt"
+FILEPATH: str = "2020/Input/day14.txt"
 
 NUM_BITS: int = 36
 

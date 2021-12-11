@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import Dict, List, Set
-FILEPATH: str = "Input/day21.txt"
+FILEPATH: str = "2020/Input/day21.txt"
 
 def parseAllergenAssociations(inputLines: List[str]) -> (Dict[str, List[str]], List[str]):
    """

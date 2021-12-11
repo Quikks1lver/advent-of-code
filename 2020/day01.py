@@ -3,7 +3,7 @@
 from Helpers.FileHelper import readFile
 import sys
 
-FILEPATH: str = "Input/day01.txt"
+FILEPATH: str = "2020/Input/day01.txt"
 MORE_OUTPUT: bool = False
 
 def populateDictWithNumbers(filename: str) -> dict:

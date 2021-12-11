@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/day10.txt"
+FILEPATH: str = "2020/Input/day10.txt"
 
 def calculateVoltageDifference(adapters: List[int]) -> int:
    """

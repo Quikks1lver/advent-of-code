@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List, Tuple, Union
-FILEPATH: str = "Input/day11.txt"
+FILEPATH: str = "2020/Input/day11.txt"
 
 # constants
 EMPTY: str = "L"

@@ -4,7 +4,7 @@ from enum import Enum
 from Helpers.AOC import whiteFlag
 from Helpers.FileHelper import readFile
 from typing import List, Set, Tuple
-FILEPATH: str = "Input/day17.txt"
+FILEPATH: str = "2020/Input/day17.txt"
 
 class Status(Enum):
    """

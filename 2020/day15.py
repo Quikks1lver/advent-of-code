@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readOneLineFileWithCommas
 from typing import Dict, List, Set
-FILEPATH: str = "Input/day15.txt"
+FILEPATH: str = "2020/Input/day15.txt"
 
 class MemoryGame:
    """

@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFileWithEmptyLineBreaks
 from typing import List, Union, Set
-FILEPATH: str = "Input/day22.txt"
+FILEPATH: str = "2020/Input/day22.txt"
 
 class Player:
    """

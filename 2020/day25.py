@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/day25.txt"
+FILEPATH: str = "2020/Input/day25.txt"
 
 def calculateLoopSize(key: int) -> int:
    val: int = 1

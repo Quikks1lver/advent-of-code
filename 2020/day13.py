@@ -3,7 +3,7 @@
 from Helpers.AOC import whiteFlag
 from Helpers.FileHelper import readFile
 from typing import List, Tuple
-FILEPATH: str = "Input/day13.txt"
+FILEPATH: str = "2020/Input/day13.txt"
 
 def findClosestMultipleAboveThreshold(num: int, threshold: int) -> int:
    """

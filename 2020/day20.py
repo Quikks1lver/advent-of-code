@@ -4,7 +4,7 @@ from Helpers.AOC import whiteFlag
 from Helpers.FileHelper import readFile, readFileWithEmptyLineBreaks
 import re
 from typing import List
-FILEPATH: str = "Input/day20.txt"
+FILEPATH: str = "2020/Input/day20.txt"
 
 class Tile:
    """

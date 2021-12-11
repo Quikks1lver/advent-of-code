@@ -4,7 +4,7 @@ from Helpers.AOC import whiteFlag
 from Helpers.FileHelper import readFileWithEmptyLineBreaks
 from typing import List, Set
 import re
-FILEPATH: str = "Input/day16.txt"
+FILEPATH: str = "2020/Input/day16.txt"
 
 class Field:
    """

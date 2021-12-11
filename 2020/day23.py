@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import Any, List, Set, Union
-FILEPATH: str = "Input/day23.txt"
+FILEPATH: str = "2020/Input/day23.txt"
 
 class Cups:
    """

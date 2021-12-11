@@ -2,7 +2,7 @@
 
 from Helpers.FileHelper import readFile
 from typing import List, Dict
-FILEPATH: str = "Input/day07.txt"
+FILEPATH: str = "2020/Input/day07.txt"
 
 def createBagMap(s: str, keepNumbering: bool) -> Dict[str, List[str]]:
    """

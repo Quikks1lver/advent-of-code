@@ -3,7 +3,7 @@
 from Helpers.Binary import convertBinaryToDecimal
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/day05.txt"
+FILEPATH: str = "2020/Input/day05.txt"
 
 def createTicketList(filename:str) -> List[str]:
    """

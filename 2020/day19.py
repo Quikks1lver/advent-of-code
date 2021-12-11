@@ -3,7 +3,7 @@
 from Helpers.AOC import whiteFlag
 from Helpers.FileHelper import readFile
 from typing import Dict, List
-FILEPATH: str = "Input/day19.txt"
+FILEPATH: str = "2020/Input/day19.txt"
 
 def constructRulesMap(rawRules: List[int]) -> Dict[int, List[int]]:
    """

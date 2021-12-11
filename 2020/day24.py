@@ -3,7 +3,7 @@
 from enum import Enum
 from Helpers.FileHelper import readFile
 from typing import Dict, List, Set, Tuple
-FILEPATH: str = "Input/day24.txt"
+FILEPATH: str = "2020/Input/day24.txt"
 
 class HexDirections(Enum):
    """

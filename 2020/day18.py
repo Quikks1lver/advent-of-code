@@ -5,7 +5,7 @@ from Helpers.AOC import whiteFlag
 from Helpers.DataStructures import Stack
 from Helpers.FileHelper import readFile
 from typing import List
-FILEPATH: str = "Input/day18.txt"
+FILEPATH: str = "2020/Input/day18.txt"
 
 DEBUGGING: bool = False
 
