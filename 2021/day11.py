@@ -1,4 +1,4 @@
-from Helpers.FileHelpers import read_lines
+from Helpers.FileHelpers import read_lines, read_2D_array
 from sys import maxsize
 from typing import List, Set, Tuple
 FILEPATH = "2021/Input/day11.txt"
@@ -45,7 +45,7 @@ def count_flashes(octopi: List[List[int]], num_steps: int, is_searching_for_sync
    return num_flashes
 
 def main():
-   octopi: List[List[int]] = [[int(c) for c in line.strip()] for line in read_lines(FILEPATH)]
+   octopi: List[List[int]] = read_2D_array(FILEPATH, int)
 
    print(f"Part 1 -- {count_flashes(octopi, 100, False)}")
    print(f"Part 2 -- {count_flashes(octopi, maxsize, True)}")
