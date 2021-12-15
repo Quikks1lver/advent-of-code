@@ -1,3 +1,4 @@
+from Helpers.ArrayHelpers import is_inbounds
 from Helpers.FileHelpers import read_2D_array
 from functools import reduce
 from typing import List, Tuple
@@ -5,9 +6,6 @@ FILEPATH = "2021/Input/day09.txt"
 
 BLOCKING_HEIGHT = 9
 CARDINAL_DIRECTIONS: List[Tuple[int, int]] = [(-1, 0), (1, 0), (0, 1), (0, -1)]
-
-def is_inbounds(twod_array: List[List[int]], row: int, col: int) -> bool:
-   return True if row >= 0 and row < len(twod_array) and col >= 0 and col < len(twod_array[0]) else False
 
 def sum_low_point_risk_levels(heights: List[List[int]]) -> int:
    risk_levels_sum = 0
