@@ -59,10 +59,7 @@ def substitute_polymer_rules_optimized(template: str, rules: Dict[str, str], num
          potential_rule = rules.get(substring, None)
          num_occurrences = old_map[substring]
 
-         if num_occurrences == 0:
-            continue
-
-         if potential_rule != None:            
+         if num_occurrences != 0 and potential_rule != None:            
             new_map[substring] -= num_occurrences
             update_dict_with_value(letter_map, potential_rule, num_occurrences)
             update_dict_with_value(new_map, substring[0] + potential_rule, num_occurrences)
