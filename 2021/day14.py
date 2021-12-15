@@ -2,29 +2,25 @@ from Helpers.FileHelpers import read_lines
 from typing import List, Dict
 FILEPATH = "2021/Input/day14.txt"
 
-def substitute_polymer_rules(template: str, rules: Dict[str, str], num_steps: int) -> str:
-   output_str: str = template
-   temp_list: List[str] = [ch for ch in template]
+def substitute_polymer_rules(template: str, rules: Dict[str, str], num_steps: int) -> List[str]:
+   ch_list: List[str] = [ch for ch in template]
    
    for _ in range(num_steps):
-      list_index: int = 0
+      index = 0
       
-      for str_index in range(len(output_str) - 1):
-         substring = output_str[str_index : str_index + 2]
+      while index < len(ch_list) - 1:
+         substring = ch_list[index] + ch_list[index + 1]
          potential_rule = rules.get(substring, None)
          
          if potential_rule != None:
-            temp_list.insert(list_index + 1, potential_rule)
-            list_index += 1
+            ch_list.insert(index + 1, potential_rule)
+            index += 1
 
-         list_index += 1
+         index += 1
 
-      output_str = "".join(temp_list)
-      print(_)
+   return ch_list
 
-   return output_str
-
-def calculate_most_minus_least_common_element(s: str) -> int:
+def calculate_most_minus_least_common_element(s: List[str]) -> int:
    frequencies: Dict[str, int] = dict()
 
    for ch in s:
