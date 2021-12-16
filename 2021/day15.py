@@ -62,14 +62,41 @@ def dijkstras_algorithm(node_map: Dict[Tuple[int, int], NodeVal], source: Tuple[
 
    return dist
 
+def get_new_risk(risk_matrix: List[List[int]], row: int, col: int, x_block: int, y_block: int) -> int:
+   curr_risk_level = risk_matrix[row][col]
+   val = curr_risk_level + x_block + y_block
+   if val > 10:
+      val += 1
+   val %= 10
+   return val if val != 0 else 1
+
+def expand_risk_matrix(risk_matrix: List[List[int]]) -> List[List[int]]:
+   new_matrix = [[c for c in r] for r in risk_matrix]
+   for _ in range(len(risk_matrix) * 4):
+      new_matrix.append(list())
+   
+   for x_block in range(5):
+      for y_block in range(5):
+         if x_block == 0 and y_block == 0:
+            continue
+
+         for row in range(len(risk_matrix)):
+            for col in range(len(risk_matrix[0])):
+               val = get_new_risk(risk_matrix, row, col, x_block, y_block)
+               new_matrix[(x_block * len(risk_matrix)) + row].append(val)
+
+   return new_matrix
+
 def main():
    # after working in vain on this problem, I checked the subreddit, which recommended Dijkstra's!
 
    risk_matrix: List[List[int]] = read_2D_array(FILEPATH, int)
    node_map: Dict[Tuple[int, int], NodeVal] = create_node_map(risk_matrix)
-
    print(f"Part 1 -- {dijkstras_algorithm(node_map, (0, 0))[len(risk_matrix) - 1, len(risk_matrix[0]) - 1]}")
-   # print(f"Part 2 -- {}")
+   
+   new_matrix = expand_risk_matrix(risk_matrix)
+   node_map = create_node_map(new_matrix)
+   print(f"Part 2 -- {dijkstras_algorithm(node_map, (0, 0))[len(new_matrix) - 1, len(new_matrix[0]) - 1]}")
 
 if __name__ == "__main__":
    main()
