@@ -1,7 +1,7 @@
+from heapq import heappop, heappush
 from Helpers.ArrayHelpers import is_inbounds
 from Helpers.FileHelpers import read_2D_array
-from heapq import heappop, heappush
-from sys import maxsize, stdout
+from sys import maxsize
 from typing import Dict, List, Tuple
 FILEPATH = "2021/Input/day15.txt"
 
@@ -11,9 +11,6 @@ class NodeVal():
    def __init__(self, cost: int, adj_nodes: List[Tuple[int, int]]):
       self.cost = cost
       self.adj_nodes = adj_nodes
-
-   def __repr__(self) -> str:
-      return f"Cost: {self.cost}, Adj Nodes: {self.adj_nodes}"
 
 def create_node_map(risk_matrix: List[List[int]]) -> Dict[Tuple[int, int], NodeVal]:
    node_map: Dict[Tuple[int, int], NodeVal] = dict()
@@ -72,18 +69,16 @@ def get_new_risk(risk_matrix: List[List[int]], row: int, col: int, x_block: int,
 
 def expand_risk_matrix(risk_matrix: List[List[int]]) -> List[List[int]]:
    new_matrix = [[c for c in r] for r in risk_matrix]
+   
    for _ in range(len(risk_matrix) * 4):
       new_matrix.append(list())
    
    for x_block in range(5):
       for y_block in range(5):
-         if x_block == 0 and y_block == 0:
-            continue
-
-         for row in range(len(risk_matrix)):
-            for col in range(len(risk_matrix[0])):
-               val = get_new_risk(risk_matrix, row, col, x_block, y_block)
-               new_matrix[(x_block * len(risk_matrix)) + row].append(val)
+         if not (x_block == 0 and y_block == 0):
+            for row in range(len(risk_matrix)):
+               for col in range(len(risk_matrix[0])):
+                  new_matrix[(x_block * len(risk_matrix)) + row].append(get_new_risk(risk_matrix, row, col, x_block, y_block))
 
    return new_matrix
 
