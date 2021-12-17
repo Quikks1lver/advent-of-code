@@ -2,6 +2,7 @@ from Helpers.FileHelpers import read_lines
 from typing import Dict, List, Set, Tuple
 FILEPATH = "2021/Input/day12.txt"
 
+PRINT_PATHS = False  # toggle to see all paths!
 START_CAVE = "start"
 END_CAVE = "end"
 
@@ -10,44 +11,50 @@ def is_small_cave(cave: str) -> bool:
       return False
    return cave.islower()
 
-def is_big_cave(cave: str) -> bool:
-   return not is_small_cave(cave)
+def find_number_of_cave_traversals(cave_map: Dict[str, List[str]]) -> int:
+   return find_number_of_cave_traversals_recursive_dfs_helper(cave_map, set(), set(), START_CAVE, [])
 
-def find_number_of_cave_traversals(cave_map: Dict[str, List[str]], visited_small_caves: Set[str], visited_moves: Set[Tuple[str, str]], cur_cave: str, here: List[str]) -> int:
+def find_number_of_cave_traversals_recursive_dfs_helper(cave_map: Dict[str, List[str]], visited_small_caves: Set[str], visited_moves: Set[Tuple[str, str]], cur_cave: str, path_traversal: List[str]) -> int:
    if cur_cave == END_CAVE:
-      print("======")
-      print(here)
-      print("======")
+      if PRINT_PATHS:
+         print(path_traversal)
       return 1
 
    num_traversals = 0
 
    for next_cave in cave_map[cur_cave]:
+      # don't visit a small cave more than once      
       if is_small_cave(next_cave) and next_cave in visited_small_caves:
          continue
 
+      # don't keep going back to the start
       if next_cave == START_CAVE:
          continue
 
+      # take a move as long as you have not taken exact same one before
+      # for example, A -> B is different from B -> A
       move = (cur_cave, next_cave)
       if move in visited_moves:
          continue
 
-      new_visited = visited_small_caves.copy()
+      # create copies for visited sets in order to preserve each DFS path's metadata
+      new_visited_small_caves = visited_small_caves.copy()
       if is_small_cave(next_cave):
-         new_visited.add(next_cave)
-
-      visited_moves2 = visited_moves.copy()
-      visited_moves2.add(move)
-      here2 = here.copy()
-      here2.append(next_cave)
-      num_traversals += find_number_of_cave_traversals(cave_map, new_visited, visited_moves2, next_cave, here2)
+         new_visited_small_caves.add(next_cave)
+      new_visited_moves = visited_moves.copy()
+      new_visited_moves.add(move)
+      new_path_traversal = path_traversal.copy()
+      new_path_traversal.append(next_cave)
+      
+      # call recursive function again
+      num_traversals += find_number_of_cave_traversals_recursive_dfs_helper(cave_map, new_visited_small_caves, new_visited_moves, next_cave, new_path_traversal)
 
    return num_traversals
 
 def create_cave_map(cave_connections_raw: List[Tuple[str]]) -> Dict[str, List[str]]:
    cave_map: Dict[str, List[str]] = dict()
 
+   # create a two way mapping between caves
    for (start_cave, end_cave) in cave_connections_raw:
       if start_cave in cave_map.keys():
          cave_map[start_cave].append(end_cave)
@@ -64,10 +71,8 @@ def create_cave_map(cave_connections_raw: List[Tuple[str]]) -> Dict[str, List[st
 def main():
    cave_connections_raw: List[Tuple[str, str]] = [tuple(line.strip().split("-")) for line in read_lines(FILEPATH)]
    cave_map: Dict[str, List[str]] = create_cave_map(cave_connections_raw)
-   val = find_number_of_cave_traversals(cave_map, set(), set(), START_CAVE, ["start"])
-   print(val)
 
-   # print(f"Part 1 -- {}")
+   print(f"Part 1 -- {find_number_of_cave_traversals(cave_map)}")
    # print(f"Part 2 -- {}")
 
 if __name__ == "__main__":
