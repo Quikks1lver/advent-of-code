@@ -12,9 +12,9 @@ def is_small_cave(cave: str) -> bool:
    return cave.islower()
 
 def find_number_of_cave_traversals(cave_map: Dict[str, List[str]]) -> int:
-   return find_number_of_cave_traversals_recursive_dfs_helper(cave_map, set(), set(), START_CAVE, [])
+   return find_number_of_cave_traversals_recursive_dfs_helper(cave_map, set(), set(), START_CAVE, None, [START_CAVE])
 
-def find_number_of_cave_traversals_recursive_dfs_helper(cave_map: Dict[str, List[str]], visited_small_caves: Set[str], visited_moves: Set[Tuple[str, str]], cur_cave: str, path_traversal: List[str]) -> int:
+def find_number_of_cave_traversals_recursive_dfs_helper(cave_map: Dict[str, List[str]], visited_small_caves: Set[str], visited_moves: Set[Tuple[str, str]], cur_cave: str, have_visited_a_small_cave_twice: str, path_traversal: List[str]) -> int:
    if cur_cave == END_CAVE:
       if PRINT_PATHS:
          print(path_traversal)
@@ -23,31 +23,40 @@ def find_number_of_cave_traversals_recursive_dfs_helper(cave_map: Dict[str, List
    num_traversals = 0
 
    for next_cave in cave_map[cur_cave]:
-      # don't visit a small cave more than once      
-      if is_small_cave(next_cave) and next_cave in visited_small_caves:
-         continue
-
-      # don't keep going back to the start
-      if next_cave == START_CAVE:
-         continue
-
-      # take a move as long as you have not taken exact same one before
-      # for example, A -> B is different from B -> A
-      move = (cur_cave, next_cave)
-      if move in visited_moves:
-         continue
-
-      # create copies for visited sets in order to preserve each DFS path's metadata
-      new_visited_small_caves = visited_small_caves.copy()
-      if is_small_cave(next_cave):
-         new_visited_small_caves.add(next_cave)
-      new_visited_moves = visited_moves.copy()
-      new_visited_moves.add(move)
-      new_path_traversal = path_traversal.copy()
-      new_path_traversal.append(next_cave)
+      if next_cave not in visited_small_caves:
+         if next_cave == START_CAVE:
+            continue
+         
+         move = (cur_cave, next_cave)
+         # if move in visited_moves:
+         #    continue
+         
+         new_visited_small_caves = visited_small_caves.copy()
+         if is_small_cave(next_cave):
+            new_visited_small_caves.add(next_cave)
+         new_visited_moves = visited_moves.copy()
+         new_visited_moves.add(move)
+         new_path_traversal = path_traversal.copy()
+         new_path_traversal.append(next_cave)
+         
+         # call recursive function again
+         num_traversals += find_number_of_cave_traversals_recursive_dfs_helper(cave_map, new_visited_small_caves, new_visited_moves, next_cave, have_visited_a_small_cave_twice, new_path_traversal)
       
-      # call recursive function again
-      num_traversals += find_number_of_cave_traversals_recursive_dfs_helper(cave_map, new_visited_small_caves, new_visited_moves, next_cave, new_path_traversal)
+      elif have_visited_a_small_cave_twice == None:
+         move = (cur_cave, next_cave)
+         # if move in visited_moves:
+         #    continue
+         
+         new_visited_small_caves = visited_small_caves.copy()
+         if is_small_cave(next_cave):
+            new_visited_small_caves.add(next_cave)
+         new_visited_moves = visited_moves.copy()
+         new_visited_moves.add(move)
+         new_path_traversal = path_traversal.copy()
+         new_path_traversal.append(next_cave)
+         
+         # call recursive function again
+         num_traversals += find_number_of_cave_traversals_recursive_dfs_helper(cave_map, new_visited_small_caves, new_visited_moves, next_cave, next_cave, new_path_traversal)
 
    return num_traversals
 
@@ -73,6 +82,7 @@ def main():
    cave_map: Dict[str, List[str]] = create_cave_map(cave_connections_raw)
 
    print(f"Part 1 -- {find_number_of_cave_traversals(cave_map)}")
+   # find_number_of_cave_traversals(cave_map)
    # print(f"Part 2 -- {}")
 
 if __name__ == "__main__":
