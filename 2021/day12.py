@@ -1,3 +1,4 @@
+from collections import defaultdict
 from Helpers.FileHelpers import read_lines
 from typing import Dict, List, Set, Tuple, Union
 FILEPATH = "2021/Input/day12.txt"
@@ -45,19 +46,12 @@ def find_number_of_cave_traversals_recursive_dfs_helper(cave_map: Dict[str, List
    return num_traversals
 
 def create_cave_map(cave_connections_raw: List[Tuple[str]]) -> Dict[str, List[str]]:
-   cave_map: Dict[str, List[str]] = dict()
+   cave_map: Dict[str, List[str]] = defaultdict(list)
 
    # create a two way mapping between caves
    for (start_cave, end_cave) in cave_connections_raw:
-      if start_cave in cave_map.keys():
          cave_map[start_cave].append(end_cave)
-      else:
-         cave_map[start_cave] = [end_cave]
-
-      if end_cave in cave_map.keys():
          cave_map[end_cave].append(start_cave)
-      else:
-         cave_map[end_cave] = [start_cave]
    
    return cave_map
 
@@ -67,7 +61,7 @@ def main():
 
    print(f"Part 1 -- {find_number_of_cave_traversals(cave_map, True)}")
    
-   # I was struggling n part 2 since my if checks were out of order; thanks to Jonathan Paulson for the help on YouTube!
+   # I was struggling on part 2 since my if-checks were out of order; thanks to Jonathan Paulson for the help on YouTube!
    print(f"Part 2 -- {find_number_of_cave_traversals(cave_map, False)}")
 
 if __name__ == "__main__":
