@@ -18,10 +18,12 @@ def parse_input(input_lines: List[str]) -> Tuple[List[List[str]], List[List[str]
 
 def count_easy_digits(output_values: List[List[str]]) -> int:
    count = 0
+   
    for row in output_values:
        for string in row:
           if len(string) in SEV_SEG_EZ_NUM_LENGTHS:
              count += 1
+   
    return count
 
 def main():
