@@ -44,7 +44,7 @@ def fold_origami(dots: Set[Tuple[int, int]], fold_instructions: List[FoldInstruc
                temp_dots.remove((x, y))
          else:
             if y > instruction.value:
-               new_y =  instruction.value - (y - instruction.value)
+               new_y = instruction.value - (y - instruction.value)
                temp_dots.add((x, new_y))
                temp_dots.remove((x, y))
 
@@ -58,7 +58,7 @@ def print_origami_code(folded_origami: Set[Tuple[int, int]]) -> None:
 
    output = [[" " for x in range(maxX)] for y in range(maxY)]
    for x, y in folded_origami:
-      output[y][x] = "#"
+      output[y][x] = "@"
 
    for row in output:
       print("".join(row))
