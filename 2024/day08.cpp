@@ -18,9 +18,7 @@ std::unordered_map<char, std::vector<std::pair<int, int>>> createAntennaToCoords
             std::pair<int, int> coord(row, col);
 
             if (retval.find(ch) == retval.end())
-            {
                 retval[ch] = std::vector<std::pair<int, int>>();
-            }
 
             retval[ch].emplace_back(coord); // No need to std::move as this obj is small.
         }
@@ -52,13 +50,9 @@ int part1(const std::vector<std::vector<char>>& input,
                 std::pair<int, int> antiNode2(pair2.first - rowDelta, pair2.second - colDelta);
 
                 if (Helpers::isInbounds(input, antiNode1.first, antiNode1.second))
-                {
                     antiNodes.insert(antiNode1);
-                }
                 if (Helpers::isInbounds(input, antiNode2.first, antiNode2.second))
-                {
                     antiNodes.insert(antiNode2);
-                }
             }
         }
     }
