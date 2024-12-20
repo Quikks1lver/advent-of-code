@@ -10,12 +10,19 @@ using std::string;
 class FileHelpers
 {
 public:
+    // To signify a NaN in 2D int array readings.
+    static const int INVALID_2D_ARR_SPOT;
+    
     // Reads a given file line by line into strings.
-    static std::vector<string> ReadFileIntoStrings(string filepath);
+    static std::vector<string> ReadFileIntoStrings(const string& filepath);
+
+    // Specially for ints, reads file into 2D array.
+    // If a NaN is seen, a INVALID_2D_ARR_SPOT is placed in that location.
+    static std::vector<std::vector<int>> Read2DIntArray(const string& filepath);
 
     // Reads a given file line by line into vectors of whatever.
     template <typename T>
-    static std::vector<std::vector<T>> ReadFileIntoListOfLists(string filepath)
+    static std::vector<std::vector<T>> ReadFileIntoListOfLists(const string& filepath)
     {
         std::vector<std::vector<T>> outputLines;
 

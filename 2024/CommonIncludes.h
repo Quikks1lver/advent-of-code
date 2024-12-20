@@ -50,7 +50,7 @@ namespace Helpers
         for (const auto& row : arr)
         {
             for (const auto& element : row)
-                cout << element;
+                cout << element << " ";
             cout << endl;
         }
     }

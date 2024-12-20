@@ -51,8 +51,8 @@ Running Step (2) will give you an executable. Simply run like so:
 Sample output (yes, the code has macros to time each part!):
 
 ```txt
-Part 1: 123 (0.004542 ms)
-Part 2: 456 (0.294792 ms)
+Part 1 : 123 (0.004542 ms)
+Part 2 : 456 (0.294792 ms)
 ```
 
 _Note: this README and build process was helped along with OpenAI._
