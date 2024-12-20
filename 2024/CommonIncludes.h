@@ -17,7 +17,7 @@ using std::endl;
     auto result = (x); \
     auto end = std::chrono::high_resolution_clock::now(); \
     std::chrono::duration<double, std::milli> duration = end - start; \
-    cout << "Part " << str << ": " << result << " (" << duration.count() << " ms)" << endl; \
+    cout << "Part " << str << " : " << result << " (" << duration.count() << " ms)" << endl; \
 }
 
 // Macro to print out part 1 answer.
