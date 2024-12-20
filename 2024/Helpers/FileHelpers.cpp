@@ -42,15 +42,9 @@ std::vector<std::vector<int>> FileHelpers::Read2DIntArray(const std::string& fil
         std::vector<int> row;
 
         for (char ch : line)
-        {
-            if (!std::isdigit(ch))
-            {
-                row.push_back(FileHelpers::INVALID_2D_ARR_SPOT);
-                continue;
-            }
-            
-            row.push_back(ch - '0');
-        }
+            row.push_back(std::isdigit(ch)
+                          ? ch - '0'
+                          : FileHelpers::INVALID_2D_ARR_SPOT);
         
         outputLines.push_back(std::move(row));
     }
