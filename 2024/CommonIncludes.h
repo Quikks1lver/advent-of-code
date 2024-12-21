@@ -12,6 +12,8 @@ using std::string;
 using std::cout;
 using std::endl;
 
+typedef long long BigNumber;
+
 #define _PARTX_WITH_TIMING(x, str) { \
     auto start = std::chrono::high_resolution_clock::now(); \
     auto result = (x); \
@@ -43,6 +45,15 @@ namespace std
 
 namespace Helpers
 {
+    // Prints a 1D array/vector.
+    template <typename T>
+    void printArray(const std::vector<T>& arr)
+    {
+        for (const auto& element : arr)
+            cout << element << " ";
+        cout << endl;
+    }
+
     // Prints a 2D array.
     template <typename T>
     void printDoubleArray(const std::vector<std::vector<T>>& arr)

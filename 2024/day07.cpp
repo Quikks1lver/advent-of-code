@@ -2,8 +2,6 @@
 #include "CommonIncludes.h"
 #define FILENAME "Input/day07.txt"
 
-typedef long long BigNumber;
-
 std::vector<std::pair<BigNumber, std::vector<BigNumber>>> parseRawInput(const std::vector<string>& rawInput)
 {
     std::vector<std::pair<BigNumber, std::vector<BigNumber>>> retval;
