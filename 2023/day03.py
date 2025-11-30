@@ -1,4 +1,5 @@
 from Helpers.FileHelpers import read_2D_array
+from Helpers.PrintSolution import *
 from typing import Union, List, Dict, Tuple
 FILEPATH = "2023/Input/day03.txt"
 from collections import defaultdict
@@ -75,8 +76,8 @@ def main():
    input: List[List[str]] = read_2D_array(FILEPATH, str)
    dimensions: Tuple[int, int] = len(input), len(input[0])
    
-   print(f"Part 1 -- {part1(input, dimensions)}")
-   print(f"Part 2 -- {part2(input, dimensions)}")
+   PART1(part1, input, dimensions)
+   PART2(part2, input, dimensions)
 
 
 if __name__ == "__main__": main()

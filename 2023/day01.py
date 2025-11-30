@@ -1,4 +1,5 @@
 from Helpers.FileHelpers import read_lines
+from Helpers.PrintSolution import *
 from typing import List, Tuple
 FILEPATH = "2023/Input/day01.txt"
 
@@ -50,7 +51,7 @@ def part2(input: List[str]) -> int:
 def main():
    input: List[str] = [line.strip() for line in read_lines(FILEPATH)]
    
-   print(f"Part 1 -- {part1(input)}")
-   print(f"Part 2 -- {part2(input)}")
+   PART1(part1, input)
+   PART2(part2, input)
 
 if __name__ == "__main__": main()
