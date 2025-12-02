@@ -1,8 +1,6 @@
-from collections import defaultdict
-from math import ceil
 from PythonHelpers.FileHelpers import read_lines
 from PythonHelpers.PrintSolution import *
-from typing import DefaultDict, List, Set, Tuple
+from typing import List, Tuple
 FILEPATH = "2025/Input/day02.txt"
 
 def count_digits_in_number(x: int) -> int:
@@ -16,19 +14,6 @@ def count_digits_in_number(x: int) -> int:
             return num_digits
         x //= 10
         num_digits += 1
-
-def get_unique_digit_counts(x: int) -> DefaultDict[int, int]:
-    dict: DefaultDict[int, int] = defaultdict(int)
-
-    if x == 0:
-        dict[0] += 1
-        return dict
-
-    while True:
-        if x == 0:
-            return dict
-        dict[x % 10] += 1
-        x //= 10
 
 def is_num_consisting_of_repeated_sequence(x: int) -> bool:
     str_x = str(x)
