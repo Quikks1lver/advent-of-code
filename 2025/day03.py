@@ -5,11 +5,6 @@ FILEPATH = "2025/Input/day03.txt"
 
 # Returns [index, val]. Checks bounds inclusively.
 def get_largest_left_most_num(line: List[int], starting_left_index: int, starting_right_index: int) -> Tuple[int, int]:
-    # Sanity checks for bounds.
-    assert starting_left_index >= 0
-    assert starting_right_index < len(line)
-    assert starting_left_index <= starting_right_index
-    
     largest_val = line[starting_right_index]
     largest_val_index = starting_right_index
 
@@ -29,8 +24,8 @@ def solve(input: List[List[int]], num_digit_number: int) -> int:
         curr_product = 0
 
         # For very first run through, left bound index is left end of array: we want to check all elements.
-        # Right index means we start with array length - 12, so that way if largest left most number is the
-        # 12th last digit, we can still complete the 12 digit number.
+        # Right index means we start with array length - num_digit_number, so that way if largest left most number is the
+        # Xth last digit, we can still complete the num_digit_number digit number.
         left_bound_index = 0
         right_bound_index = arr_length - num_digit_number
 
@@ -40,7 +35,7 @@ def solve(input: List[List[int]], num_digit_number: int) -> int:
             # Always replace left bound index with new sliding window.
             left_bound_index = largest_val_index + 1
             
-            # Make sure we always have enough numbers left over to complete a 12 digit number.
+            # Make sure we always have enough numbers left over to complete an X digit number.
             # Hence, adjust sliding window one notch over.
             right_bound_index += 1
 
