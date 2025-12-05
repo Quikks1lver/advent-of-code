@@ -38,9 +38,20 @@ def generate_range_set(ranges: List[Tuple[int, int]]) -> Set[Tuple[int, int]]:
     return new_ranges
 
 def part2(ranges: List[Tuple[int, int]]) -> int:
-    new_ranges_initial = generate_range_set(ranges)
-    new_ranges_after_initial_pass_to_dedupe = generate_range_set(list(new_ranges_initial))
-    return sum((end-start+1) for start, end in new_ranges_after_initial_pass_to_dedupe)
+    prev_ranges: Set[Tuple[int, int]] = set()
+    prev_ranges.add((0, 0))
+    new_ranges: Set[Tuple[int, int]] = set()
+    ranges_to_test_against = ranges
+    
+    # Keep merging ranges until no changes were made.
+    # NOTE: I later learned we can avoid this by sorting the ranges, but this was my first impl
+    # and I'm sticking with it, as it got the gold star.
+    while prev_ranges != new_ranges:
+        prev_ranges = new_ranges
+        new_ranges = generate_range_set(ranges_to_test_against)
+        ranges_to_test_against = list(new_ranges)
+    
+    return sum((end-start+1) for start, end in new_ranges)
 
 def main() -> None:
     ranges: List[Tuple[int, int]] = []
