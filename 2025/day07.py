@@ -73,6 +73,6 @@ def main() -> None:
             break
 
     PART1(part1, input, start)
-    PART1(part2, input, start)
+    PART2(part2, input, start)
 
 if __name__ == "__main__": main()
