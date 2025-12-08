@@ -63,9 +63,7 @@ def part1(input: List[Point], num_iters: int) -> int:
     return math.prod(sorted_circuit_sizes[-3:])
 
 def part2(input: List[Point]) -> int:
-    input_set: Set[Point] = set(input)
     mega_circuit: Set[Point] = set()
-
     minheap = create_distances_minheap(input)
 
     while len(mega_circuit) != len(input):
@@ -79,8 +77,6 @@ def part2(input: List[Point]) -> int:
         # Using discard() instead of remove() to avoid key not found exception.
         mega_circuit.add(p1)
         mega_circuit.add(p2)
-        input_set.discard(p1)
-        input_set.discard(p2)
 
     return p1[0] * p2[0]
 
