@@ -107,6 +107,9 @@ def main() -> None:
         input.append(tuple(single_line)) # type: ignore
 
     PART1(part1, input, 1000)
+
+    # Initial part 2 solution I recalculated distances every time, and took 190s, but got right
+    # answer. Then I realized ... wait we can still use minheap. New solution takes <1s.
     PART2(part2, input)
 
 if __name__ == "__main__": main()
