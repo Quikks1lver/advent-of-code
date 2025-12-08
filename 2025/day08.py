@@ -62,20 +62,6 @@ def part1(input: List[Point], num_iters: int) -> int:
     sorted_circuit_sizes.sort()
     return math.prod(sorted_circuit_sizes[-3:])
 
-def grab_closest_remaining_points(input_set: Set[Point], mega_circuit: Set[Point]) -> Tuple[Point, Point]:
-    min_distance = 1e9
-    p1, p2 = DEFAULT_POINT, DEFAULT_POINT
-    
-    for pt in input_set:
-        for circuit_pt in mega_circuit:
-            dist = calculate_euclidean_distance(pt, circuit_pt)
-            if dist < min_distance:
-                min_distance = dist
-                p1 = pt
-                p2 = circuit_pt
-    
-    return p1, p2
-
 def part2(input: List[Point]) -> int:
     input_set: Set[Point] = set(input)
     mega_circuit: Set[Point] = set()
@@ -85,7 +71,7 @@ def part2(input: List[Point]) -> int:
     while len(mega_circuit) != len(input):
         while True:
             popped_val = heapq.heappop(minheap)
-            p1, p2 = popped_val[1][0], popped_val[1][1]
+            p1, p2 = popped_val[1]
 
             if p1 not in mega_circuit or p2 not in mega_circuit:
                 break
