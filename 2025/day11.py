@@ -38,6 +38,6 @@ def main() -> None:
         mapping[split_line[0].strip()] = tuple([v for v in split_line[1].strip().split() if not v.isspace()])
 
     PART1(part1, mapping) # 0.25 ms
-    PART1(part2, mapping) # 15 s
+    PART2(part2, mapping) # 15 s
 
 if __name__ == "__main__": main()
